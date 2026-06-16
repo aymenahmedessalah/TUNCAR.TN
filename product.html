@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معاينة وتأكيد القطعة | TUNCAR</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="product-page-container">
+        <a href="index.html" class="back-link">⬅️ العودة للبحث المركزي</a>
+        <div id="product-workspace"></div>
+    </main>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+
+        fetch('catalog.json')
+            .then(res => res.json())
+            .then(catalog => {
+                const item = catalog.find(p => p.id === productId);
+                if (item) { renderWorkspace(item); }
+            });
+
+        function renderWorkspace(item) {
+            document.getElementById('product-workspace').innerHTML = `
+                <h2 class="title">${item.name}</h2>
+                <p class="ref-code">المعرف الرقمي المقفل: <code>${item.id}</code></p>
+                <img src="${item.image_url}" class="product-img">
+                <p class="desc">${item.description}</p>
+                <div class="video-box">
+                    <h5>📹 فيديو الفحص الميكانيكي المباشر والتشخيص:</h5>
+                    <iframe src="${item.video_url}" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="lock-zone">
+                    <div class="price-info">
+                        <span class="label">السعر الحالي المضمون:</span>
+                        <span class="value">${item.current_price} TND</span>
+                    </div>
+                    <button onclick='lockPriceAndAddToCart(${JSON.stringify(item)})' class="btn-lock-cart">
+                        🔒 قفل السعر وتأكيد الطلب
+                    </button>
+                </div>`;
+        }
+
+        function lockPriceAndAddToCart(item) {
+            let cart = JSON.parse(localStorage.getItem('tuncar_cart')) || [];
+            if (!cart.some(c => c.id === item.id)) {
+                cart.push({ id: item.id, name: item.name, locked_price: item.current_price, timestamp: Date.now() });
+                localStorage.setItem('tuncar_cart', JSON.stringify(cart));
+            }
+            sendToWhatsApp(item);
+        }
+
+        function sendToWhatsApp(item) {
+            let phoneNumber = "216XXXXXXXX"; // ضع رقم هاتفك التونسي هنا
+            let text = `Bonjour TUNCAR.TN,\nلقد قمت بقفل السعر وتأكيد طلب قطعة الغيار:\n\n🛠️ *${item.name}*\n• كود القطعة: \`${item.id}\`\n• السعر المقفل: *${item.current_price} TND*\n\n⏳ (السيستم جمّد التحديثات الخارجية لهذا الطلب لحسابي بنجاح).`;
+            window.location.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
+        }
+    </script>
+</body>
+</html>
