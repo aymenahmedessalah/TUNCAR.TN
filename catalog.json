@@ -8,6 +8,25 @@
     "commission_rate": 0.15,
     "image_url": "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=500",
     "video_url": "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    "description": "Turbo d'origine certifié. Testé sur banc والتشخيص بالفيديو مرفق بالكامل."
+    "description": "Turbo d'origine certifié. Testé sur banc والتشخيص بالفيديو مرفق بالكامل لضمان السلامة.",
+    "seller_metrics": {
+      "total_sales_volume": 4500,
+      "free_slots_remaining": 0
+    }
+  },
+  {
+    "id": "ref-g6-ecu-02",
+    "name": "Calculateur Moteur Bosch VAG",
+    "category": "Électronique",
+    "condition": "used",
+    "current_price": 600,
+    "commission_rate": 0.22,
+    "image_url": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=500",
+    "video_url": "",
+    "description": "Calculateur moteur injecté et testé. هذا العرض يمنح المنصة عمولة أعلى وصعد للأولوية.",
+    "seller_metrics": {
+      "total_sales_volume": 12000,
+      "free_slots_remaining": 8
+    }
   }
 ]
