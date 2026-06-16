@@ -31,43 +31,103 @@
 
     <main class="hero-container">
         <div class="search-box-uber">
-            <h2>ما هي قطعة الغيار التي تبحث عنها؟</h2>
-            <p>ابحث عن القطعة الأصلية المفحوصة بالفيديو بأعلى معايير الجودة</p>
+            <h2>أين تجد قطعة غيارك القادمة؟</h2>
+            <p>حدد مواصفات سيارتك أولاً، ثم اطلب أفضل عرض مضمون ومفحوص</p>
+            
+            <!-- الخطوة الأولى: كراج تحديد السيارة الذكي (Uber Ride Type style) -->
+            <div class="car-selector-zone">
+                <div class="select-group">
+                    <select id="car-make" onchange="populateModels()">
+                        <option value="">-- اختر الشركة المصنعة --</option>
+                        <option value="volkswagen">Volkswagen</option>
+                        <option value="peugeot">Peugeot</option>
+                        <option value="renault">Renault</option>
+                    </select>
+                    
+                    <select id="car-model">
+                        <option value="">-- الموديل --</option>
+                    </select>
+                    
+                    <select id="car-year">
+                        <option value="">-- السنة --</option>
+                        <option value="2012">2012</option>
+                        <option value="2011">2011</option>
+                        <option value="2010">2010</option>
+                        <option value="2009">2009</option>
+                        <option value="2008">2008</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- الخطوة الثانية: صندوق البحث المركزي التفاعلي -->
             <div class="search-wrapper">
-                <input type="text" id="search-input" placeholder="مثال: لوحة تحكم، علبة سرعات، توربو...">
+                <input type="text" id="search-input" placeholder="ما هي القطعة المطلوبة؟ (مثال: توربو، علبة سرعات...)">
                 <button onclick="triggerSmartRouting()" class="btn-uber">ابحث عن أفضل عرض</button>
             </div>
         </div>
 
+        <!-- الخطوة الثالثة: سيكشن استعراض العرض القائد الفائز (صندوق أسود مخفي المصدر) -->
         <section id="results-section" class="results-zone" style="display: none;">
-            <h3>السيستم وجد لك العرض المضمون المتوافق تماماً:</h3>
+            <h3>السيستم وجد لك العرض المضمون المتوافق مع سيارتك:</h3>
             <div id="winning-offer-card"></div>
         </section>
     </main>
 
     <script>
+        // قواميس ديناميكية للموديلات التونسية الشائعة
+        const modelsData = {
+            volkswagen: ["Golf 6", "Golf 7", "Polo", "Passat"],
+            peugeot: ["208", "308", "Partner"],
+            renault: ["Clio 4", "Megane", "Symbol"]
+        };
+
+        function populateModels() {
+            const make = document.getElementById('car-make').value;
+            const modelSelect = document.getElementById('car-model');
+            
+            modelSelect.innerHTML = '<option value="">-- الموديل --</option>';
+            
+            if (make && modelsData[make]) {
+                modelsData[make].forEach(model => {
+                    let opt = document.createElement('option');
+                    opt.value = model.toLowerCase().replace(" ", "-");
+                    opt.innerText = model;
+                    modelSelect.appendChild(opt);
+                });
+            }
+        }
+
         let catalog = [];
+        // جلب قاعدة البيانات المحدثة
         fetch('catalog.json')
             .then(res => res.json())
             .then(data => { catalog = data; updateCartCount(); });
 
         function triggerSmartRouting() {
+            const make = document.getElementById('car-make').value;
+            const model = document.getElementById('car-model').value;
             const query = document.getElementById('search-input').value.trim();
-            if (!query) return alert("الرجاء إدخال اسم القطعة للبحث!");
 
-            let filteredParts = catalog.filter(item => item.name.toLowerCase().includes(query.toLowerCase()));
-            if (filteredParts.length === 0) return alert("القطعة المطلوبة غير متاحة حالياً.");
+            if (!make || !model) return alert("الرجاء تحديد ماركة وموديل السيارة أولاً لتجنب عدم مطابقة القطعة!");
+            if (!query) return alert("الرجاء كتابة اسم القطعة الميكانيكية أو الإلكترونية!");
 
-            // خوارزمية التوجيه الذكي المبنية على العائد المالي الصافي للمنصة
+            // فلترة مزدوجة: حسب اسم القطعة ومطابقتها لوصف السيارة في قاعدة البيانات
+            let filteredParts = catalog.filter(item => {
+                let matchQuery = item.name.toLowerCase().includes(query.toLowerCase()) || item.description.toLowerCase().includes(query.toLowerCase());
+                let matchCar = item.name.toLowerCase().includes(model.replace("-", " "));
+                return matchQuery && matchCar;
+            });
+
+            if (filteredParts.length === 0) return alert("القطعة المطلوبة غير متاحة حالياً لهذا الموديل بالذات، أو هي قيد الفحص الفني.");
+
+            // خوارزمية الفرز الشهيرة حسب أعلى عائد مالي صافي للمنصة (العمولة الكبرى أولاً)
             filteredParts.sort((a, b) => {
-                // إذا كان البائع متجاوزاً لـ 10 آلاف معاملات وله قطع مجانية، تحسب عمولته بـ 0 لكن رتبته تصعد مكافأة له
                 let rateA = (a.seller_metrics.total_sales_volume >= 10000 && a.seller_metrics.free_slots_remaining > 0) ? 0 : a.commission_rate;
                 let rateB = (b.seller_metrics.total_sales_volume >= 10000 && b.seller_metrics.free_slots_remaining > 0) ? 0 : b.commission_rate;
                 
                 let netYieldA = a.current_price * rateA;
                 let netYieldB = b.current_price * rateB;
 
-                // لو تساوت العمولات (أو كلاهما معفي)، يتم صعود السعر الأفضل للزبون حماية للتجربة
                 if (netYieldB === netYieldA) return a.current_price - b.current_price;
                 return netYieldB - netYieldA;
             });
@@ -78,13 +138,13 @@
         function renderWinningOffer(item) {
             document.getElementById('results-section').style.display = 'block';
             document.getElementById('winning-offer-card').innerHTML = `
-                <div class="offer-card">
+                <div class="offer-card animate-fade">
                     <img src="${item.image_url}" alt="${item.name}">
                     <div class="offer-details">
                         <h4>${item.name}</h4>
-                        <p class="status-tag">🛡️ فحص الميكاترونيكس: جاهزة ومؤمنة 100%</p>
+                        <p class="status-tag">🛡️ متوافقة تماماً ومؤمنة بالفيديو بنظام ميكاترونيكس</p>
                         <p class="price-display">${item.current_price} TND</p>
-                        <a href="product.html?id=${item.id}" class="btn-go">معاينة فيديو الفحص وقفل السعر</a>
+                        <a href="product.html?id=${item.id}" class="btn-go">معاينة فيديو التشخيص وقفل السعر</a>
                     </div>
                 </div>`;
         }
