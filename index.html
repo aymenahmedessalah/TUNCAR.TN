@@ -3,10 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TUNCAR.TN | Digital Casse</title>
-    <link rel="stylesheet" href="style.css">
+    <title>TUNCAR.TN | الواجهة الانسيابية الذكية</title>
+    <style>
+        :root {
+            --bg-dark: #070a12;
+            --bg-surface: #0f1524;
+            --accent-blue: #0284c7;
+            --accent-green: #10b981;
+            --border-dark: #1e293b;
+            --text-white: #f8fafc;
+            --text-grey: #64748b;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 15px;
+            direction: rtl;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-dark);
+            border-radius: 14px;
+        }
+
+        #cart-status {
+            color: var(--accent-green);
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .hero-container {
+            max-width: 700px;
+            margin: 50px auto;
+        }
+
+        /* واجهة الـ Sub-system الانسيابية الشبيهة بأوبر */
+        .search-box-uber {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-dark);
+            padding: 35px;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .search-box-uber h2 {
+            margin-top: 0;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .search-box-uber p {
+            color: var(--text-grey);
+            font-size: 14px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        /* نظام القوائم الانسيابية المتفاعلة */
+        .sub-system-garage {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+            background: #070a12;
+            padding: 15px;
+            border-radius: 16px;
+            border: 1px solid var(--border-dark);
+        }
+
+        .select-card {
+            position: relative;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-dark);
+            border-radius: 12px;
+            padding: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .select-card:focus-within {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 10px rgba(2, 132, 199, 0.2);
+        }
+
+        .select-card label {
+            display: block;
+            font-size: 11px;
+            color: var(--text-grey);
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .select-card select {
+            width: 100%;
+            background: transparent;
+            color: var(--text-white);
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+        }
+
+        /* صندوق البحث المركزي المدمج */
+        .search-wrapper {
+            display: flex;
+            gap: 12px;
+            background: #070a12;
+            padding: 8px;
+            border-radius: 14px;
+            border: 1px solid var(--border-dark);
+        }
+
+        .search-wrapper input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .btn-uber {
+            background: var(--accent-blue);
+            border: none;
+            color: white;
+            padding: 0 28px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+            transition: background 0.2s;
+        }
+
+        .btn-uber:hover {
+            background: #0369a1;
+        }
+
+        /* منطقة استعراض أفضل عرض فائز ومخفي */
+        .results-zone {
+            margin-top: 40px;
+        }
+
+        .results-zone h3 {
+            font-size: 15px;
+            color: var(--text-grey);
+            margin-bottom: 15px;
+        }
+
+        .offer-card {
+            display: flex;
+            gap: 20px;
+            background: var(--bg-surface);
+            border: 1px solid var(--accent-green);
+            padding: 20px;
+            border-radius: 18px;
+            align-items: center;
+            animation: fluidAppear 0.4s ease-out;
+        }
+
+        .offer-card img {
+            width: 110px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 12px;
+            background: #070a12;
+        }
+
+        .offer-details {
+            flex: 1;
+        }
+
+        .offer-details h4 {
+            margin: 0 0 8px 0;
+            font-size: 18px;
+        }
+
+        .status-tag {
+            font-size: 12px;
+            color: var(--accent-green);
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .price-display {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--accent-green);
+            margin: 10px 0;
+        }
+
+        .btn-go {
+            display: inline-block;
+            background: var(--accent-green);
+            color: #000;
+            padding: 12px 22px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        @keyframes fluidAppear {
+            from { opacity: 0; transform: scale(0.98) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .sub-system-garage { grid-template-columns: 1fr; }
+            .search-wrapper { flex-direction: column; background: transparent; border: none; padding: 0; }
+            .search-wrapper input { background: #070a12; border: 1px solid var(--border-dark); border-radius: 12px; margin-bottom: 10px; }
+            .btn-uber { padding: 15px; border-radius: 12px; }
+            .offer-card { flex-direction: column; text-align: center; }
+        }
+    </style>
 </head>
 <body>
+
     <header>
         <div class="brand">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" width="180" height="45" style="vertical-align: middle;">
@@ -31,120 +254,118 @@
 
     <main class="hero-container">
         <div class="search-box-uber">
-            <h2>أين تجد قطعة غيارك القادمة؟</h2>
-            <p>حدد مواصفات سيارتك أولاً، ثم اطلب أفضل عرض مضمون ومفحوص</p>
+            <h2>اطلب قطعة غيارك الآن</h2>
+            <p>منظومة ذكية متكاملة لتوجيه وفحص طلبات السيارات في تونس</p>
             
-            <!-- الخطوة الأولى: كراج تحديد السيارة الذكي (Uber Ride Type style) -->
-            <div class="car-selector-zone">
-                <div class="select-group">
-                    <select id="car-make" onchange="populateModels()">
-                        <option value="">-- اختر الشركة المصنعة --</option>
+            <!-- لوحة تحكم النظام الفرعي (Sub-system) للسيارات -->
+            <div class="sub-system-garage">
+                <div class="select-card">
+                    <label>المصنع</label>
+                    <select id="car-make" onchange="updateModelsFluidly()">
+                        <option value="">اختر الماركة</option>
                         <option value="volkswagen">Volkswagen</option>
                         <option value="peugeot">Peugeot</option>
                         <option value="renault">Renault</option>
                     </select>
-                    
+                </div>
+                
+                <div class="select-card">
+                    <label>الموديل</label>
                     <select id="car-model">
-                        <option value="">-- الموديل --</option>
+                        <option value="">حدد الموديل</option>
                     </select>
-                    
+                </div>
+                
+                <div class="select-card">
+                    <label>السنة</label>
                     <select id="car-year">
-                        <option value="">-- السنة --</option>
+                        <option value="">سنة الصنع</option>
                         <option value="2012">2012</option>
                         <option value="2011">2011</option>
                         <option value="2010">2010</option>
                         <option value="2009">2009</option>
-                        <option value="2008">2008</option>
                     </select>
                 </div>
             </div>
 
-            <!-- الخطوة الثانية: صندوق البحث المركزي التفاعلي -->
+            <!-- محرك البحث المركزي -->
             <div class="search-wrapper">
                 <input type="text" id="search-input" placeholder="ما هي القطعة المطلوبة؟ (مثال: توربو، علبة سرعات...)">
-                <button onclick="triggerSmartRouting()" class="btn-uber">ابحث عن أفضل عرض</button>
+                <button onclick="executeSmartRouting()" class="btn-uber">طلب العرض الأفضل</button>
             </div>
         </div>
 
-        <!-- الخطوة الثالثة: سيكشن استعراض العرض القائد الفائز (صندوق أسود مخفي المصدر) -->
+        <!-- سيكشن النتيجة الانسيابية المتفاعلة -->
         <section id="results-section" class="results-zone" style="display: none;">
-            <h3>السيستم وجد لك العرض المضمون المتوافق مع سيارتك:</h3>
+            <h3>أفضل عرض متوافق (تم فحص الجودة والعائد):</h3>
             <div id="winning-offer-card"></div>
         </section>
     </main>
 
     <script>
-        // قواميس ديناميكية للموديلات التونسية الشائعة
-        const modelsData = {
+        const modelsDictionary = {
             volkswagen: ["Golf 6", "Golf 7", "Polo", "Passat"],
             peugeot: ["208", "308", "Partner"],
             renault: ["Clio 4", "Megane", "Symbol"]
         };
 
-        function populateModels() {
+        function updateModelsFluidly() {
             const make = document.getElementById('car-make').value;
             const modelSelect = document.getElementById('car-model');
+            modelSelect.innerHTML = '<option value="">حدد الموديل</option>';
             
-            modelSelect.innerHTML = '<option value="">-- الموديل --</option>';
-            
-            if (make && modelsData[make]) {
-                modelsData[make].forEach(model => {
-                    let opt = document.createElement('option');
-                    opt.value = model.toLowerCase().replace(" ", "-");
-                    opt.innerText = model;
-                    modelSelect.appendChild(opt);
+            if (make && modelsDictionary[make]) {
+                modelsDictionary[make].forEach(mod => {
+                    let option = document.createElement('option');
+                    option.value = mod.toLowerCase().replace(" ", "-");
+                    option.innerText = mod;
+                    modelSelect.appendChild(option);
                 });
             }
         }
 
         let catalog = [];
-        // جلب قاعدة البيانات المحدثة
         fetch('catalog.json')
             .then(res => res.json())
             .then(data => { catalog = data; updateCartCount(); });
 
-        function triggerSmartRouting() {
+        function executeSmartRouting() {
             const make = document.getElementById('car-make').value;
             const model = document.getElementById('car-model').value;
             const query = document.getElementById('search-input').value.trim();
 
-            if (!make || !model) return alert("الرجاء تحديد ماركة وموديل السيارة أولاً لتجنب عدم مطابقة القطعة!");
-            if (!query) return alert("الرجاء كتابة اسم القطعة الميكانيكية أو الإلكترونية!");
+            if (!make || !model) return alert("الرجاء تحديد مواصفات السيارة من لوحة التحكم أولاً!");
+            if (!query) return alert("ما هي القطعة التي تبحث عنها؟");
 
-            // فلترة مزدوجة: حسب اسم القطعة ومطابقتها لوصف السيارة في قاعدة البيانات
-            let filteredParts = catalog.filter(item => {
-                let matchQuery = item.name.toLowerCase().includes(query.toLowerCase()) || item.description.toLowerCase().includes(query.toLowerCase());
-                let matchCar = item.name.toLowerCase().includes(model.replace("-", " "));
-                return matchQuery && matchCar;
+            let matches = catalog.filter(item => {
+                let textMatch = item.name.toLowerCase().includes(query.toLowerCase()) || item.description.toLowerCase().includes(query.toLowerCase());
+                let carMatch = item.name.toLowerCase().includes(model.replace("-", " "));
+                return textMatch && carMatch;
             });
 
-            if (filteredParts.length === 0) return alert("القطعة المطلوبة غير متاحة حالياً لهذا الموديل بالذات، أو هي قيد الفحص الفني.");
+            if (matches.length === 0) return alert("لم نجد عروضاً متطابقة في المخازن المفتوحة حالياً.");
 
-            // خوارزمية الفرز الشهيرة حسب أعلى عائد مالي صافي للمنصة (العمولة الكبرى أولاً)
-            filteredParts.sort((a, b) => {
+            // الفرز الخلفي الصارم حسب العمولة الصافية للمنصة
+            matches.sort((a, b) => {
                 let rateA = (a.seller_metrics.total_sales_volume >= 10000 && a.seller_metrics.free_slots_remaining > 0) ? 0 : a.commission_rate;
                 let rateB = (b.seller_metrics.total_sales_volume >= 10000 && b.seller_metrics.free_slots_remaining > 0) ? 0 : b.commission_rate;
-                
-                let netYieldA = a.current_price * rateA;
-                let netYieldB = b.current_price * rateB;
-
-                if (netYieldB === netYieldA) return a.current_price - b.current_price;
-                return netYieldB - netYieldA;
+                return (b.current_price * rateB) - (a.current_price * rateA);
             });
 
-            renderWinningOffer(filteredParts[0]);
+            renderOfferFluidly(matches[0]);
         }
 
-        function renderWinningOffer(item) {
-            document.getElementById('results-section').style.display = 'block';
+        function renderOfferFluidly(item) {
+            const section = document.getElementById('results-section');
+            section.style.display = 'block';
             document.getElementById('winning-offer-card').innerHTML = `
-                <div class="offer-card animate-fade">
+                <div class="offer-card">
                     <img src="${item.image_url}" alt="${item.name}">
                     <div class="offer-details">
                         <h4>${item.name}</h4>
-                        <p class="status-tag">🛡️ متوافقة تماماً ومؤمنة بالفيديو بنظام ميكاترونيكس</p>
+                        <p class="status-tag">🛡️ فحص رقمي متكامل ومطابقة تامة للمواصفات</p>
                         <p class="price-display">${item.current_price} TND</p>
-                        <a href="product.html?id=${item.id}" class="btn-go">معاينة فيديو التشخيص وقفل السعر</a>
+                        <a href="product.html?id=${item.id}" class="btn-go">معاينة فيديو الفحص وقفل السعر</a>
                     </div>
                 </div>`;
         }
