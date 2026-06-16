@@ -1,27 +1,49 @@
 :root {
-    --bg-dark: #090d16;
-    --bg-surface: #121826;
+    --bg-dark: #070a12;
+    --bg-surface: #0f1524;
     --accent-blue: #0284c7;
     --accent-green: #10b981;
     --border-dark: #1e293b;
     --text-white: #f8fafc;
+    --text-grey: #64748b;
 }
-body { background-color: var(--bg-dark); color: var(--text-white); font-family: system-ui, sans-serif; margin: 0; padding: 15px; direction: rtl; }
-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: var(--bg-surface); border: 1px solid var(--border-dark); border-radius: 12px; }
+body { background-color: var(--bg-dark); color: var(--text-white); font-family: system-ui, -apple-system, sans-serif; margin: 0; padding: 15px; direction: rtl; }
+header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: var(--bg-surface); border: 1px solid var(--border-dark); border-radius: 14px; }
 #cart-status { color: var(--accent-green); font-size: 14px; font-weight: bold; }
-.hero-container { max-width: 700px; margin: 40px auto; }
-.search-box-uber { background: var(--bg-surface); border: 1px solid var(--border-dark); padding: 30px; border-radius: 20px; text-align: center; }
-.search-wrapper { display: flex; gap: 10px; margin-top: 25px; }
-.search-wrapper input { flex: 1; background: #090d16; border: 1px solid var(--border-dark); color: white; padding: 15px; border-radius: 10px; font-size: 16px; }
-.btn-uber { background: var(--accent-blue); border: none; color: white; padding: 0 25px; border-radius: 10px; font-weight: bold; cursor: pointer; }
-.results-zone { margin-top: 30px; }
-.offer-card { display: flex; gap: 20px; background: var(--bg-surface); border: 1px solid var(--accent-green); padding: 20px; border-radius: 16px; align-items: center; }
-.offer-card img { width: 120px; height: 120px; object-fit: cover; border-radius: 10px; }
-.price-display { font-size: 22px; font-weight: 800; color: var(--accent-green); margin: 10px 0; }
-.btn-go, .btn-lock-cart { display: inline-block; background: var(--accent-green); color: #000; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; cursor: pointer; border: none;}
-.product-page-container { max-width: 600px; margin: 30px auto; background: var(--bg-surface); padding: 25px; border-radius: 20px; border: 1px solid var(--border-dark); }
-.back-link { color: var(--accent-blue); text-decoration: none; }
-.product-img { width: 100%; border-radius: 12px; margin: 15px 0; }
-.video-box iframe { width: 100%; height: 300px; border-radius: 10px; margin-top: 10px; }
-.lock-zone { display: flex; justify-content: space-between; align-items: center; background: #090d16; padding: 15px; border-radius: 12px; margin-top: 25px; }
-.price-info .value { font-size: 24px; font-weight: 900; color: var(--accent-green); display: block; }
+.hero-container { max-width: 700px; margin: 50px auto; }
+.search-box-uber { background: var(--bg-surface); border: 1px solid var(--border-dark); padding: 35px; border-radius: 24px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
+.search-box-uber h2 { margin-top: 0; font-size: 24px; }
+.search-box-uber p { color: var(--text-grey); font-size: 14px; margin-bottom: 20px; }
+.search-wrapper { display: flex; gap: 12px; }
+.search-wrapper input { flex: 1; background: #070a12; border: 1px solid var(--border-dark); color: white; padding: 16px; border-radius: 12px; font-size: 16px; outline: none; }
+.search-wrapper input:focus { border-color: var(--accent-blue); }
+.btn-uber { background: var(--accent-blue); border: none; color: white; padding: 0 28px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 15px; }
+.results-zone { margin-top: 40px; }
+.results-zone h3 { font-size: 16px; color: var(--text-grey); margin-bottom: 15px; }
+.offer-card { display: flex; gap: 20px; background: var(--bg-surface); border: 1px solid var(--accent-green); padding: 20px; border-radius: 18px; align-items: center; }
+.offer-card img { width: 110px; height: 110px; object-fit: cover; border-radius: 12px; background: #070a12; }
+.offer-details { flex: 1; }
+.offer-details h4 { margin: 0 0 8px 0; font-size: 18px; }
+.status-tag { font-size: 12px; color: var(--accent-green); margin: 0; font-weight: 600; }
+.price-display { font-size: 24px; font-weight: 900; color: var(--accent-green); margin: 10px 0; }
+.btn-go, .btn-lock-cart { display: inline-block; background: var(--accent-green); color: #000; padding: 12px 22px; border-radius: 10px; text-decoration: none; font-weight: bold; cursor: pointer; border: none; font-size: 14px; }
+.product-page-container { max-width: 600px; margin: 30px auto; background: var(--bg-surface); padding: 30px; border-radius: 24px; border: 1px solid var(--border-dark); }
+.back-link { color: var(--accent-blue); text-decoration: none; font-size: 14px; font-weight: bold; }
+.title { font-size: 22px; margin: 15px 0 5px 0; }
+.ref-code { font-size: 12px; color: var(--text-grey); margin: 0 0 20px 0; }
+.ref-code code { background: #070a12; padding: 3px 6px; border-radius: 4px; color: var(--accent-blue); }
+.product-img { width: 100%; max-height: 280px; object-fit: cover; border-radius: 14px; margin-bottom: 20px; }
+.desc { color: #cbd5e1; font-size: 15px; line-height: 1.6; }
+.video-box h5 { color: var(--text-grey); margin: 20px 0 10px 0; font-size: 14px; }
+.video-box iframe { width: 100%; height: 315px; border-radius: 14px; background: #070a12; border: 1px solid var(--border-dark); }
+.no-video { background: #1c1917; color: #f59e0b; padding: 12px; border-radius: 10px; font-size: 13px; text-align: center; }
+.lock-zone { display: flex; justify-content: space-between; align-items: center; background: #070a12; padding: 20px; border-radius: 16px; margin-top: 30px; border: 1px solid var(--border-dark); }
+.price-info .label { font-size: 12px; color: var(--text-grey); display: block; }
+.price-info .value { font-size: 26px; font-weight: 900; color: var(--accent-green); }
+.btn-lock-cart { background: var(--accent-green); color: #000; font-size: 15px; padding: 14px 24px; }
+@media (max-width: 600px) {
+    .offer-card { flex-direction: column; text-align: center; }
+    .lock-zone { flex-direction: column; gap: 15px; text-align: center; }
+    .search-wrapper { flex-direction: column; }
+    .btn-uber { padding: 15px; }
+}
