@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TUNCAR.TN | Digital Casse</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" width="200" height="50" style="vertical-align: middle;">
+              <defs>
+                <linearGradient id="tuncarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#0284c7" />
+                  <stop offset="100%" stop-color="#10b981" />
+                </linearGradient>
+              </defs>
+              <g transform="translate(10, 15)">
+                <path d="M15 50 Q 30 20, 55 20 L 75 20 Q 90 35, 100 50" fill="none" stroke="url(#tuncarGrad)" stroke-width="5" stroke-linecap="round"/>
+                <path d="M5 50 L 105 50" fill="none" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="102" cy="50" r="5" fill="#10b981" />
+              </g>
+              <text x="135" y="58" font-family="system-ui, -apple-system, sans-serif" font-size="34" font-weight="900" fill="#f8fafc" letter-spacing="1.5">
+                TUN<tspan fill="url(#tuncarGrad)">CAR</tspan><tspan font-size="22" font-weight="500" fill="#94a3b8">.TN</tspan>
+              </text>
+            </svg>
+        </div>
+        <div id="cart-status">🛒 السلة المضمونة (<span id="cart-count">0</span>)</div>
+    </header>
+
+    <main class="hero-container">
+        <div class="search-box-uber">
+            <h2>ما هي قطعة الغيار التي تبحث عنها؟</h2>
+            <p>ابحث عن القطعة الأصلية المفحوصة بالفيديو بأفضل عائد</p>
+            <div class="search-wrapper">
+                <input type="text" id="search-input" placeholder="مثال: لوحة تحكم، علبة سرعات، توربو...">
+                <button onclick="triggerSmartSearch()" class="btn-uber">ابحث عن أفضل عرض</button>
+            </div>
+        </div>
+
+        <section id="results-section" class="results-zone" style="display: none;">
+            <h3>السيستم وجد لك أفضل عرض مضمون ومفحوص:</h3>
+            <div id="winning-offer-card"></div>
+        </section>
+    </main>
+
+    <script>
+        let catalog = [];
+        fetch('catalog.json')
+            .then(res => res.json())
+            .then(data => { catalog = data; updateCartCount(); });
+
+        function triggerSmartSearch() {
+            const query = document.getElementById('search-input').value.trim();
+            if (!query) return alert("الرجاء إدخال اسم القطعة!");
+
+            let filteredParts = catalog.filter(item => item.name.toLowerCase().includes(query.toLowerCase()));
+            if (filteredParts.length === 0) return alert("القطعة المطلوبة غير متاحة حالياً.");
+
+            // فرز حسب أعلى عمولة صافية للمنصة في الخلفية
+            filteredParts.sort((a, b) => (b.current_price * b.commission_rate) - (a.current_price * a.commission_rate));
+
+            let bestYieldOffer = filteredParts[0];
+            renderWinningOffer(bestYieldOffer);
+        }
+
+        function renderWinningOffer(item) {
+            document.getElementById('results-section').style.display = 'block';
+            document.getElementById('winning-offer-card').innerHTML = `
+                <div class="offer-card">
+                    <img src="${item.image_url}" alt="${item.name}">
+                    <div class="offer-details">
+                        <h4>${item.name}</h4>
+                        <p class="status-tag">🛡️ فحص احترافي: جاهزة ومؤمنة</p>
+                        <p class="price-display">${item.current_price} TND</p>
+                        <a href="product.html?id=${item.id}" class="btn-go">معاينة فيديو الفحص وقفل السعر</a>
+                    </div>
+                </div>`;
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('tuncar_cart')) || [];
+            document.getElementById('cart-count').innerText = cart.length;
+        }
+    </script>
+</body>
+</html>
