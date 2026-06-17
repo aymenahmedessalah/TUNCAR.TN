@@ -9,8 +9,11 @@
             --primary-dark: #0b1329;
             --bg-main: #030712;
             --cyber-blue: #00f2fe;
+            --cyber-green: #05ffc5;
+            --cyber-amber: #ffb800;
             --text-light: #f3f4f6;
             --border-blue: #1f3a60;
+            --bg-card: #0f172a;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -20,7 +23,8 @@
             padding: 0;
             overflow-x: hidden;
         }
-        /* شريط التنقل */
+        
+        /* شريط التنقل العلوي الفخم */
         .navbar {
             background: var(--primary-dark);
             padding: 15px 30px;
@@ -28,6 +32,9 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid var(--border-blue);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
         .logo {
             color: var(--cyber-blue);
@@ -35,16 +42,46 @@
             font-size: 24px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            cursor: pointer;
+            text-decoration: none;
         }
         .logo span { color: #fff; }
         .nav-links { display: flex; gap: 20px; }
-        .nav-links a { color: #9ca3af; text-decoration: none; font-size: 14px; transition: color 0.3s; }
-        .nav-links a:hover { color: var(--cyber-blue); }
+        .nav-links a { 
+            color: #9ca3af; 
+            text-decoration: none; 
+            font-size: 14px; 
+            transition: all 0.3s; 
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        .nav-links a:hover, .nav-links a.active { 
+            color: var(--cyber-blue); 
+            background: rgba(0, 242, 254, 0.05);
+        }
         
-        /* واجهة العرض للمستخدم */
+        /* الأقسام والصفحات الافتراضية */
+        .page-section {
+            display: none; /* إخفاء كافة الصفحات افتراضياً ويتم تفعيلها بـ JS */
+            padding: 60px 20px 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .page-section.active {
+            display: block; /* عرض الصفحة النشطة فقط */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ستايل الصفحة الرئيسية */
         .hero-section {
             text-align: center;
-            padding: 120px 20px;
+            padding: 60px 20px;
             background: radial-gradient(circle at 50% 50%, #0d1b3e 0%, transparent 70%);
         }
         .hero-section h2 { font-size: 36px; margin-bottom: 20px; }
@@ -57,22 +94,54 @@
             margin: 0 auto;
         }
         .search-box input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid var(--border-blue);
-            background: var(--primary-dark);
-            color: #fff;
+            width: 100%; padding: 12px; border-radius: 8px;
+            border: 1px solid var(--border-blue); background: var(--primary-dark); color: #fff;
         }
         .search-box button {
-            padding: 12px 25px;
-            background: var(--cyber-blue);
-            border: none;
-            border-radius: 8px;
-            color: #030712;
-            font-weight: bold;
-            cursor: pointer;
+            padding: 12px 25px; background: var(--cyber-blue); border: none;
+            border-radius: 8px; color: #030712; font-weight: bold; cursor: pointer;
         }
+
+        /* ستايل شبكة كروت الأقسام (المحركات وقطع الغيار) */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-blue);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        .card:hover {
+            border-color: var(--cyber-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.1);
+        }
+        .card h3 { color: var(--cyber-blue); margin-top: 0; }
+        .card p { color: #9ca3af; font-size: 14px; }
+        .price-tag { color: var(--cyber-green); font-weight: bold; font-family: monospace; font-size: 16px; }
+
+        /* ستايل صفحة الحساب الشخصي */
+        .profile-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--primary-dark);
+            border: 1px solid var(--border-blue);
+            border-radius: 16px;
+            padding: 30px;
+        }
+        .profile-field {
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(31, 58, 96, 0.4);
+            padding-bottom: 10px;
+        }
+        .profile-field label { color: var(--text-gray); font-size: 12px; display: block; margin-bottom: 5px; }
+        .profile-field span { font-size: 16px; color: #fff; }
+
         footer {
             text-align: center;
             padding: 20px;
@@ -82,6 +151,7 @@
             color: #6b7280;
             position: fixed;
             bottom: 0; width: 100%; box-sizing: border-box;
+            z-index: 10;
         }
         .secret-trigger { background: transparent; border: none; color: #1f3a60; cursor: pointer; margin-right: 10px; }
     </style>
@@ -89,27 +159,97 @@
 <body>
 
     <div id="site-wrapper">
-        <!-- شريط التنقل العلوي -->
+        <!-- شريط التنقل العلوي الفعال -->
         <nav class="navbar" id="navbar-view">
-            <div class="logo">TUNCAR<span>.TN</span></div>
+            <!-- اللوجو يعيدك دائما للرئيسية عبر الدالة الكودية -->
+            <div class="logo" onclick="navigateTo('home')">TUNCAR<span>.TN</span></div>
             <div class="nav-links">
-                <a href="#">الرئيسية</a>
-                <a href="#">المحركات</a>
-                <a href="#">قطع الغيار</a>
-                <a href="#">حسابي</a>
+                <a id="link-home" onclick="navigateTo('home')" class="active">الرئيسية</a>
+                <a id="link-engines" onclick="navigateTo('engines')">المحركات</a>
+                <a id="link-parts" onclick="navigateTo('parts')">قطع الغيار</a>
+                <a id="link-profile" onclick="navigateTo('profile')">حسابي</a>
             </div>
         </nav>
 
-        <!-- المحتوى الرئيسي القابل للتغير -->
-        <main id="main-content">
+        <!-- ================= الصفحة الرئيسية ================= -->
+        <main id="page-home" class="page-section active">
             <section class="hero-section">
-                <h2>أول منصة ذكية لقطع غيار السيارات في تونس</h2>
-                <p>ابحث عن قطع الغيار الدقيقة لسيارتك بضغطة زر واحدة ومن أي مكان.</p>
+                <h2>أول منصة ميكاترونيكية ذكية لسيارات في تونس</h2>
+                <p>ابحث عن قطع الغيار الدقيقة والمحركات لمنظومة سيارات Volkswagen والماركات العالمية بضغطة زر واحدة.</p>
                 <div class="search-box">
-                    <input type="text" placeholder="أدخل رقم القطعة أو اسم السيارة (مثال: Golf 6 Culasse)...">
+                    <input type="text" placeholder="أدخل اسم القطعة أو السيارة (مثال: Golf 6 Culasse)...">
                     <button>ابحث الآن</button>
                 </div>
             </section>
+        </main>
+
+        <!-- ================= صفحة المحركات ================= -->
+        <main id="page-engines" class="page-section">
+            <h2>قسم المحركات المتطورة (TSI / TDI)</h2>
+            <p style="color: #9ca3af;">تصفح واشترِ المحركات الكاملة مع ضمان الفحص الميكانيكي الدقيق.</p>
+            <div class="items-grid">
+                <div class="card">
+                    <h3>محرك 1.4 TSI توربو كامل</h3>
+                    <p>متوافق مع Golf 6 / Jetta. مستورد، بحالة ممتازة ومعاين بأجهزة الكشف الذكية.</p>
+                    <div class="price-tag">4,800 DT</div>
+                </div>
+                <div class="card">
+                    <h3>محرك 2.0 TDI سيستم كامل</h3>
+                    <p>متوافق مع Passat / Golf 6. كفاءة وقود عالية، شامل ملحقات ضخ الوقود والتيربو.</p>
+                    <div class="price-tag">5,500 DT</div>
+                </div>
+                <div class="card">
+                    <h3>محرك 1.2 TSI رباعي الأسطوانات</h3>
+                    <p>متوافق مع Polo / Golf 6. قليل الاستهلاك، فحص كبس الأسطوانات 95%.</p>
+                    <div class="price-tag">3,900 DT</div>
+                </div>
+            </div>
+        </main>
+
+        <!-- ================= صفحة قطع الغيار ================= -->
+        <main id="page-parts" class="page-section">
+            <h2>مخزن قطع الغيار الذكي</h2>
+            <p style="color: #9ca3af;">القطع الميكانيكية والإلكترونية عالية الدقة المتوفرة حالياً في المخازن التونسية.</p>
+            <div class="items-grid">
+                <div class="card">
+                    <h3>رأس المحرك (Culasse) - Golf 6</h3>
+                    <p>أصلي، خاضع للاختبار الحراري وفحص الشقوق الميكروسكوبية، جاهز للتركيب.</p>
+                    <div class="price-tag">1,200 DT</div>
+                </div>
+                <div class="card">
+                    <h3>مجموعة القابض (Kit Embrayage) Sachs</h3>
+                    <p>مجموعة دبرياج كاملة مع الفولان موتور لسيارات محركات TSI التوربو.</p>
+                    <div class="price-tag">850 DT</div>
+                </div>
+                <div class="card">
+                    <h3>مضخة وقود ضغط عالي (HPFP)</h3>
+                    <p>مضخة أصلية بوش لمحركات الحقن المباشر المتطورة لضمان استقرار الضغط.</p>
+                    <div class="price-tag">620 DT</div>
+                </div>
+            </div>
+        </main>
+
+        <!-- ================= صفحة حسابي ================= -->
+        <main id="page-profile" class="page-section">
+            <h2 style="text-align: center; margin-bottom: 30px;">ملف المستخدم الشخصي</h2>
+            <div class="profile-container">
+                <div class="profile-field">
+                    <label>الاسم الكامل</label>
+                    <span>أحمد بن محمد</span>
+                </div>
+                <div class="profile-field">
+                    <label>نوع السيارة المسجلة</label>
+                    <span>Volkswagen Golf 6 (1.4 TSI)</span>
+                </div>
+                <div class="profile-field">
+                    <label>الموقع / الولاية</label>
+                    <span>تونس العاصمة</span>
+                </div>
+                <div class="profile-field">
+                    <label>حالة العضوية</label>
+                    <span style="color: var(--cyber-green);">حساب نشط وبورصة مشتريات فعالة</span>
+                </div>
+            </div>
         </main>
 
         <!-- تذييل الصفحة مع الزر المخفي -->
@@ -119,7 +259,6 @@
         </footer>
     </div>
 
-    <!-- استدعاء ملفات التحكم -->
     <script src="js/app.js"></script>
 </body>
 </html>
