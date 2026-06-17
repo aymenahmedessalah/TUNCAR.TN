@@ -17,438 +17,334 @@
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-light);
+            background-color: var(--bg-main); color: var(--text-light);
             margin: 0; padding: 0; overflow-x: hidden;
         }
         
-        /* شريط التنقل العلوي */
+        /* شريط التنقل */
         .navbar {
             background: var(--primary-dark); padding: 15px 30px;
             display: flex; justify-content: space-between; align-items: center;
             border-bottom: 2px solid var(--border-blue); position: sticky; top: 0; z-index: 1000;
         }
-        .logo {
-            color: var(--cyber-blue); font-weight: bold; font-size: 24px;
-            text-transform: uppercase; letter-spacing: 1px; cursor: pointer; text-decoration: none;
-        }
+        .logo { color: var(--cyber-blue); font-weight: bold; font-size: 24px; text-decoration: none; }
         .logo span { color: #fff; }
-        .nav-links { display: flex; gap: 20px; }
-        .nav-links a { 
-            color: #9ca3af; text-decoration: none; font-size: 14px; 
-            transition: all 0.3s; cursor: pointer; padding: 5px 10px; border-radius: 4px;
-        }
-        .nav-links a:hover, .nav-links a.active { 
-            color: var(--cyber-blue); background: rgba(0, 242, 254, 0.05);
-        }
+        .nav-links a { color: #9ca3af; text-decoration: none; font-size: 14px; padding: 5px 10px; }
         
-        /* الأقسام والصفحات */
-        .page-section {
-            display: none; padding: 40px 20px 100px 20px; max-width: 1200px; margin: 0 auto;
-            animation: fadeIn 0.4s ease-in-out;
-        }
-        .page-section.active { display: block; }
+        /* القسم الرئيسي */
+        .page-section { padding: 40px 20px 100px 20px; max-width: 1200px; margin: 0 auto; }
+        .hero-section { text-align: center; background: radial-gradient(circle at 50% 50%, #0d1b3e 0%, transparent 70%); }
+        .hero-section h2 { font-size: 32px; margin-bottom: 10px; }
+        .hero-section p { color: #9ca3af; margin-bottom: 30px; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ستايل الصفحة الرئيسية */
-        .hero-section {
-            text-align: center; padding: 40px 20px 20px 20px;
-            background: radial-gradient(circle at 50% 50%, #0d1b3e 0%, transparent 70%);
-        }
-        .hero-section h2 { font-size: 36px; margin-bottom: 20px; }
-        .hero-section p { color: #9ca3af; max-width: 600px; margin: 0 auto 30px; }
-        
-        .search-box {
-            display: flex; justify-content: center; gap: 10px; max-width: 500px; margin: 0 auto 40px;
-        }
-        .search-box input {
-            width: 100%; padding: 12px; border-radius: 8px;
-            border: 1px solid var(--border-blue); background: var(--primary-dark); color: #fff;
-        }
-        .search-box button {
-            padding: 12px 25px; background: var(--cyber-blue); border: none;
-            border-radius: 8px; color: #030712; font-weight: bold; cursor: pointer;
-        }
-
-        /* ================= السلايدر الميكانيكي المطور ================= */
-        .brands-slider-container {
-            max-width: 1000px; margin: 0 auto; position: relative; overflow: hidden; padding: 40px 0; outline: none;
-        }
-        .brands-slider-container::before, .brands-slider-container::after {
-            content: ""; height: 100%; width: 150px; position: absolute; top: 0; z-index: 2; pointer-events: none;
-        }
+        /* ================= السلايدر المتناسب ================= */
+        .brands-slider-container { max-width: 1000px; margin: 0 auto; position: relative; overflow: hidden; padding: 20px 0; outline: none; }
+        .brands-slider-container::before, .brands-slider-container::after { content: ""; height: 100%; width: 150px; position: absolute; top: 0; z-index: 2; pointer-events: none; }
         .brands-slider-container::before { left: 0; background: linear-gradient(to right, var(--bg-main), transparent); }
         .brands-slider-container::after { right: 0; background: linear-gradient(to left, var(--bg-main), transparent); }
-
-        .brands-wrapper {
-            display: flex; align-items: center; gap: 30px; overflow-x: auto; padding: 20px 0;
-            cursor: grab; user-select: none; -ms-overflow-style: none; scrollbar-width: none;  
-        }
+        .brands-wrapper { display: flex; align-items: center; gap: 25px; overflow-x: auto; padding: 20px 0; cursor: grab; user-select: none; scrollbar-width: none; }
         .brands-wrapper::-webkit-scrollbar { display: none; }
-        .brands-wrapper:active { cursor: grabbing; }
-        
         .brand-card {
-            min-width: 160px; height: 90px; background: var(--bg-card); border: 1px solid var(--border-blue); border-radius: 14px;
+            min-width: 150px; height: 80px; background: var(--bg-card); border: 1px solid var(--border-blue); border-radius: 12px;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s, box-shadow 0.25s, opacity 0.25s;
-            opacity: 0.3; transform: scale(0.85); box-sizing: border-box; cursor: pointer;
+            opacity: 0.3; transform: scale(0.85); cursor: pointer;
         }
-        
-        .brand-card.focused {
-            opacity: 1; border-color: var(--cyber-blue); box-shadow: 0 0 25px rgba(0, 242, 254, 0.35);
-            transform: scale(1.15); background: rgba(11, 19, 41, 0.6);
-        }
-        .brand-card span { font-weight: bold; font-size: 15px; color: #fff; pointer-events: none; }
-        .brand-card small { color: var(--cyber-blue); font-size: 10px; margin-top: 5px; text-transform: uppercase; pointer-events: none; }
+        .brand-card.focused { opacity: 1; border-color: var(--cyber-blue); box-shadow: 0 0 20px rgba(0, 242, 254, 0.25); transform: scale(1.1); background: rgba(11, 19, 41, 0.6); }
+        .brand-card span { font-weight: bold; font-size: 14px; color: #fff; }
 
-        /* ================= منطقة العرض والنتائج الحية الجديدة ================= */
-        .results-container {
-            max-width: 1000px; margin: 40px auto 0 auto; padding: 20px;
-            background: var(--bg-card); border: 1px solid var(--border-blue); border-radius: 12px;
-            display: none; /* مخفية حتى يتم الاستدعاء */
+        /* ================= منظومة الفلترة المتسلسلة للمشتري/البائع ================= */
+        .selector-panel {
+            max-width: 750px; margin: 30px auto; padding: 25px;
+            background: var(--bg-card); border: 1px solid var(--border-blue); border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: right;
+            display: none; /* تظهر فقط عند اختيار ماركة */
             animation: fadeIn 0.3s ease-in-out;
         }
-        .results-title {
-            font-size: 20px; color: var(--cyber-blue); margin-top: 0; margin-bottom: 20px;
-            border-bottom: 1px solid var(--border-blue); padding-bottom: 10px; text-align: right;
+        .panel-title { color: var(--cyber-blue); font-size: 18px; margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid var(--border-blue); padding-bottom: 10px; }
+        
+        .selectors-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+        .select-group { display: flex; flex-direction: column; }
+        .select-group label { font-size: 12px; color: #9ca3af; margin-bottom: 6px; }
+        .select-group select {
+            padding: 12px; background: var(--primary-dark); border: 1px solid var(--border-blue);
+            border-radius: 8px; color: #fff; font-size: 14px; cursor: pointer; outline: none;
         }
-        .model-block {
-            margin-bottom: 25px; background: rgba(255, 255, 255, 0.01);
-            padding: 15px; border-radius: 8px; border-right: 4px solid var(--cyber-amber);
-        }
-        .model-name {
-            font-size: 16px; color: var(--cyber-amber); font-weight: bold; margin-bottom: 10px;
-        }
-        .spec-table {
-            width: 100%; border-collapse: collapse; font-size: 14px; text-align: right;
-        }
-        .spec-table th, .spec-table td {
-            border: 1px solid rgba(31, 58, 96, 0.6); padding: 10px;
-        }
-        .spec-table th {
-            background: rgba(0, 242, 254, 0.05); color: var(--cyber-blue);
-        }
-        .spec-table td strong { color: var(--cyber-green); }
+        .select-group select:disabled { opacity: 0.4; cursor: not-allowed; }
+        .select-group select:focus { border-color: var(--cyber-blue); }
 
-        /* ستايل المكونات الأخرى للموقع */
-        .items-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 30px;
+        /* ================= بطاقة السيارة المثبتة المعزولة والنهائية ================= */
+        .isolated-car-card {
+            max-width: 750px; margin: 30px auto 0 auto; padding: 25px;
+            background: linear-gradient(145deg, #0f172a, #070d19);
+            border: 2px solid var(--cyber-green); border-radius: 16px;
+            box-shadow: 0 0 30px rgba(5, 255, 197, 0.15); text-align: right;
+            display: none; /* تظهر فقط بعد استكمال الاختيارات الثلاثة */
+            animation: slideUp 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .card {
-            background: var(--bg-card); border: 1px solid var(--border-blue); border-radius: 12px; padding: 20px; transition: all 0.3s;
-        }
-        .card:hover { border-color: var(--cyber-blue); transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0, 242, 254, 0.1); }
-        .card h3 { color: var(--cyber-blue); margin-top: 0; }
-        .card p { color: #9ca3af; font-size: 14px; }
-        .price-tag { color: var(--cyber-green); font-weight: bold; font-family: monospace; font-size: 16px; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .car-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(5, 255, 197, 0.2); padding-bottom: 12px; margin-bottom: 20px; }
+        .car-title { font-size: 22px; color: #fff; margin: 0; font-weight: bold; }
+        .car-badge { background: rgba(5, 255, 197, 0.1); color: var(--cyber-green); padding: 4px 12px; border-radius: 20px; font-size: 12px; border: 1px solid var(--cyber-green); }
+        
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .info-item { background: rgba(255,255,255,0.02); padding: 12px; border-radius: 8px; border-right: 3px solid var(--cyber-blue); }
+        .info-item.full-width { grid-column: span 2; border-right-color: var(--cyber-amber); }
+        .info-label { font-size: 12px; color: #9ca3af; margin-bottom: 4px; }
+        .info-value { font-size: 15px; color: #fff; font-weight: bold; }
 
-        footer {
-            text-align: center; padding: 20px; background: var(--primary-dark);
-            border-top: 1px solid var(--border-blue); font-size: 12px; color: #6b7280;
-            position: fixed; bottom: 0; width: 100%; box-sizing: border-box; z-index: 10;
-        }
+        footer { text-align: center; padding: 20px; background: var(--primary-dark); border-top: 1px solid var(--border-blue); font-size: 12px; color: #6b7280; margin-top: 60px; }
     </style>
 </head>
 <body>
 
     <div id="site-wrapper">
-        <!-- شريط التنقل -->
         <nav class="navbar">
-            <div class="logo" onclick="location.reload()">TUNCAR<span>.TN</span></div>
+            <div class="logo">TUNCAR<span>.TN</span></div>
             <div class="nav-links">
-                <a id="link-home" class="active">الرئيسية</a>
-                <a href="cars-manager.html" style="color: var(--cyber-amber); font-weight: bold;">لوحة التحكم ⚙️</a>
+                <a href="cars-manager.html" style="color: var(--cyber-amber); font-weight: bold;">لوحة المالك المركزيّة ⚙️</a>
             </div>
         </nav>
 
-        <!-- الصفحة الرئيسية -->
-        <main id="page-home" class="page-section active">
+        <main class="page-section">
             <section class="hero-section">
-                <h2>أول منصة ميكاترونيكية ذكية للسيارات في تونس</h2>
-                <p>تصفح وابحث في قاعدة بيانات منظومات VAG والماركات العالمية المخزنة حياً داخل كود المشروع.</p>
-                
-                <div class="search-box">
-                    <input type="text" id="brandSearchInput" placeholder="أدخل اسم الماركة أو الموديل (مثال: VOLKSWAGEN أو Golf 6)...">
-                    <button onclick="executeSearch()">ابحث الآن</button>
+                <h2>اختر منظومة سيارتك بدقة</h2>
+                <p>حدد الماركة، ثم الموديل والفئة لاستدعاء بيانات الزيت، الفتيس، والخصائص الميكانيكية المعتمدة من المالك.</p>
+
+                <div class="brands-slider-container" id="sliderContainer" tabindex="0">
+                    <div class="brands-wrapper" id="infiniteSlider"></div>
                 </div>
 
-                <!-- حاوية السلايدر -->
-                <div class="brands-slider-container" id="sliderContainer" tabindex="0">
-                    <div class="brands-wrapper" id="infiniteSlider">
-                        <!-- يتم حقن الكروت هنا ديناميكياً من ملف JSON -->
+                <div class="selector-panel" id="selectorPanel">
+                    <div class="panel-title" id="panelTitle">تخصيص البحث لسيارات: </div>
+                    <div class="selectors-grid">
+                        <div class="select-group">
+                            <label>1. الموديل (Model)</label>
+                            <select id="modelSelect" onchange="onModelChange()"><option value="">-- اختر الموديل --</option></select>
+                        </div>
+                        <div class="select-group">
+                            <label>2. سنة الصنع (Year)</label>
+                            <select id="yearSelect" onchange="onYearChange()" disabled><option value="">-- اختر السنة --</option></select>
+                        </div>
+                        <div class="select-group">
+                            <label>3. الفئة / المحرك (Variant)</label>
+                            <select id="variantSelect" onchange="onVariantChange()" disabled><option value="">-- اختر الفئة --</option></select>
+                        </div>
                     </div>
                 </div>
 
-                <!-- ================= منطقة عرض جداول البيانات الحية (البديل للـ Prompt) ================= -->
-                <div class="results-container" id="liveResultsArea">
-                    <h3 class="results-title" id="resultsTitle">نتائج البحث الميكانيكي</h3>
-                    <div id="resultsContent"></div>
+                <div class="isolated-car-card" id="isolatedCarCard">
+                    <div class="car-header">
+                        <h4 class="car-title" id="resCarName">Volkswagen Golf 6</h4>
+                        <span class="car-badge" id="resCarVariant">1.4 TSI</span>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">سنة الصنع (Production Year)</div>
+                            <div class="info-value" id="resCarYear">2011</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">علبة السرعات المعززة (Gearbox)</div>
+                            <div class="info-value" id="resCarGearbox">DSG 7</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">سعة ونوع زيت المحرك الموصى به</div>
+                            <div class="info-value" style="color: var(--cyber-green);" id="resCarOil">3.6 لتر 5W30</div>
+                        </div>
+                        <div class="info-item full-width">
+                            <div class="info-label">دليل الدعم والملاحظات الفنية للمنظومة</div>
+                            <div class="info-value" style="font-weight: normal; color: #d1d5db;" id="resCarNotes">-</div>
+                        </div>
+                    </div>
                 </div>
+
             </section>
         </main>
 
-        <footer>
-            <span>© 2026 TUNCAR. جميع الحقوق محفوظة.</span>
-        </footer>
+        <footer><span>© 2026 TUNCAR. جميع الحقوق محفوظة لمالك المنصة.</span></footer>
     </div>
 
     <script>
-        const container = document.getElementById('sliderContainer');
         const slider = document.getElementById('infiniteSlider');
-        const liveResultsArea = document.getElementById('liveResultsArea');
-        const resultsContent = document.getElementById('resultsContent');
-        const resultsTitle = document.getElementById('resultsTitle');
-        
-        let globalDatabase = {}; // لحفظ نسخة من البيانات المجلوبة عالمياً
+        const selectorPanel = document.getElementById('selectorPanel');
+        const panelTitle = document.getElementById('panelTitle');
+        const modelSelect = document.getElementById('modelSelect');
+        const yearSelect = document.getElementById('yearSelect');
+        const variantSelect = document.getElementById('variantSelect');
+        const isolatedCarCard = document.getElementById('isolatedCarCard');
 
-        // 1. سحب البيانات ديناميكياً من ملف الـ JSON المرفوع بالموقع
-        async function loadSliderBrandsFromJSON() {
+        let db = {}; // تخزين محلي لملف الـ JSON المجلوب
+        let selectedBrand = "";
+
+        // جلب البيانات من ملفك المرفوع على السيرفر
+        async function fetchDatabase() {
             try {
                 const response = await fetch('cars-db.json');
-                if(!response.ok) throw new Error();
-                
-                globalDatabase = await response.json();
-                slider.innerHTML = '';
-                
-                const brandList = Object.keys(globalDatabase);
-                
-                brandList.forEach(brand => {
-                    const card = document.createElement('div');
-                    card.className = 'brand-card';
-                    card.setAttribute('data-brand', brand);
-                    card.innerHTML = `<span>${brand}</span><small>المخزن الذكي</small>`;
-                    slider.appendChild(card);
-                });
-
-                const originalCards = Array.from(slider.children);
-                originalCards.forEach(card => {
-                    let cloneBefore = card.cloneNode(true);
-                    let cloneAfter = card.cloneNode(true);
-                    slider.insertBefore(cloneBefore, slider.firstChild);
-                    slider.appendChild(cloneAfter);
-                });
-
-                setupSliderPhysics(originalCards.length);
-
-            } catch (error) {
-                console.error("خطأ في قراءة ملف JSON قاعدة البيانات.");
-                slider.innerHTML = '<div style="color:#ef4444; width:100%; text-align:center;">يرجى إنشاء ملف cars-db.json في المستودع أولاً</div>';
+                db = await response.json();
+                buildSlider();
+            } catch (e) {
+                slider.innerHTML = '<div style="color:#ef4444;">فشل قراءة ملف cars-db.json</div>';
             }
         }
 
-        // 2. إدارة فيزياء السلايدر المتناسب 1:1
-        function setupSliderPhysics(originalLength) {
-            let isDown = false;
-            let startX, scrollLeft;
-            let isDragging = false;
+        // بناء سلايدر الماركات المتناسب
+        function buildSlider() {
+            slider.innerHTML = '';
+            const brands = Object.keys(db);
+            brands.forEach(brand => {
+                const card = document.createElement('div');
+                card.className = 'brand-card';
+                card.setAttribute('data-brand', brand);
+                card.innerHTML = `<span>${brand}</span>`;
+                slider.appendChild(card);
+            });
 
+            // مضاعفة الكروت للحركة الدائرية 360 اللانهائية
+            Array.from(slider.children).forEach(card => {
+                slider.insertBefore(card.cloneNode(true), slider.firstChild);
+                slider.appendChild(card.cloneNode(true));
+            });
+
+            initSliderPhysics(brands.length);
+        }
+
+        // التحكم في فيزياء حركية السلايدر المتناسب 1:1 مع سحب اليد والروليت
+        function initSliderPhysics(origLength) {
+            let isDown = false, startX, scrollLeft, isDragging = false;
             const firstCard = slider.querySelector('.brand-card');
             if(!firstCard) return;
+            const cardWidth = firstCard.getBoundingClientRect().width + 25;
+            const totalWidth = cardWidth * origLength;
+            slider.scrollLeft = totalWidth;
 
-            const cardWidth = firstCard.getBoundingClientRect().width + 30; 
-            const totalOriginalWidth = cardWidth * originalLength;
-            slider.scrollLeft = totalOriginalWidth;
-
-            function updateCenterFocus() {
+            function updateFocus() {
                 const cards = slider.querySelectorAll('.brand-card');
-                const containerCenter = slider.getBoundingClientRect().left + (slider.offsetWidth / 2);
-                
-                let closestCard = null;
-                let minDistance = Infinity;
-
-                cards.forEach(card => {
-                    const cardRect = card.getBoundingClientRect();
-                    const cardCenter = cardRect.left + (cardRect.width / 2);
-                    const distance = Math.abs(containerCenter - cardCenter);
-
-                    if (distance < minDistance) {
-                        minDistance = distance;
-                        closestCard = card;
-                    }
+                const center = slider.getBoundingClientRect().left + (slider.offsetWidth / 2);
+                let closest = null, min = Infinity;
+                cards.forEach(c => {
+                    const dist = Math.abs(center - (c.getBoundingClientRect().left + c.offsetWidth/2));
+                    if(dist < min) { min = dist; closest = c; }
                 });
-
-                cards.forEach(card => card.classList.remove('focused'));
-                if (closestCard) {
-                    closestCard.classList.add('focused');
-                }
+                cards.forEach(c => c.classList.remove('focused'));
+                if(closest) closest.classList.add('focused');
             }
 
-            function handleInfiniteScroll() {
-                if (slider.scrollLeft < 10) {
-                    slider.scrollLeft += totalOriginalWidth;
-                } else if (slider.scrollLeft >= slider.scrollWidth - slider.offsetWidth - 10) {
-                    slider.scrollLeft -= totalOriginalWidth;
-                }
-                updateCenterFocus();
-            }
-
-            slider.addEventListener('scroll', handleInfiniteScroll);
-
-            slider.addEventListener('wheel', (e) => {
-                e.preventDefault();
-                slider.scrollLeft += e.deltaY * 1.0; 
-            }, { passive: false });
-
-            slider.addEventListener('mousedown', (e) => {
-                isDown = true; isDragging = false;
-                startX = e.pageX - slider.offsetLeft;
-                scrollLeft = slider.scrollLeft;
+            slider.addEventListener('scroll', () => {
+                if(slider.scrollLeft < 10) slider.scrollLeft += totalWidth;
+                else if(slider.scrollLeft >= slider.scrollWidth - slider.offsetWidth - 10) slider.scrollLeft -= totalWidth;
+                updateFocus();
             });
 
-            window.addEventListener('mouseup', () => {
-                if (!isDown) return;
-                isDown = false;
-                setTimeout(snapToCenterSmooth, 30);
-            });
-
+            slider.addEventListener('wheel', (e) => { e.preventDefault(); slider.scrollLeft += e.deltaY; }, { passive: false });
+            slider.addEventListener('mousedown', (e) => { isDown = true; isDragging = false; startX = e.pageX - slider.offsetLeft; scrollLeft = slider.scrollLeft; });
+            window.addEventListener('mouseup', () => { if(!isDown) return; isDown = false; setTimeout(snap, 30); });
             slider.addEventListener('mousemove', (e) => {
-                if(!isDown) return;
-                e.preventDefault();
-                const x = e.pageX - slider.offsetLeft;
-                const walk = (x - startX) * 1.0; 
-                if (Math.abs(walk) > 3) isDragging = true;
-                slider.scrollLeft = scrollLeft - walk;
+                if(!isDown) return; e.preventDefault();
+                const x = e.pageX - slider.offsetLeft; const walk = (x - startX) * 1.0;
+                if(Math.abs(walk) > 3) isDragging = true; slider.scrollLeft = scrollLeft - walk;
             });
 
-            slider.querySelectorAll('.brand-card').forEach(card => {
-                card.addEventListener('click', (e) => {
-                    if (isDragging) return; 
-                    selectBrand(card);
-                });
+            slider.querySelectorAll('.brand-card').forEach(c => {
+                c.addEventListener('click', () => { if(isDragging) return; onBrandSelect(c); });
             });
 
-            function snapToCenterSmooth() {
-                const focused = slider.querySelector('.brand-card.focused');
-                if (focused) {
-                    const containerCenter = slider.offsetWidth / 2;
-                    const cardCenter = focused.offsetLeft + (focused.offsetWidth / 2);
-                    slider.scrollTo({ left: cardCenter - containerCenter, behavior: 'smooth' });
-                }
+            function snap() {
+                const f = slider.querySelector('.brand-card.focused');
+                if(f) slider.scrollTo({ left: (f.offsetLeft + f.offsetWidth/2) - (slider.offsetWidth/2), behavior: 'smooth' });
             }
-
-            function selectBrand(cardElement) {
-                if(!cardElement) return;
-                const brandName = cardElement.getAttribute('data-brand');
-                document.getElementById('brandSearchInput').value = brandName;
-                
-                const containerCenter = slider.offsetWidth / 2;
-                const cardCenter = cardElement.offsetLeft + (cardElement.offsetWidth / 2);
-                
-                slider.scrollTo({ left: cardCenter - containerCenter, behavior: 'smooth' });
-                cardElement.style.borderColor = "var(--cyber-green)";
-                setTimeout(() => updateCenterFocus(), 250);
-
-                // استدعاء البيانات وحقنها حياً في الصفحة بدلاً من الـ Prompt
-                displayLiveSpecs(brandName, null);
-            }
-
-            updateCenterFocus();
-            snapToCenterSmooth();
+            updateFocus(); snap();
         }
 
-        // ================= دالة حقن وعرض الجداول حياً في الواجهة الرئيسية =================
-        function displayLiveSpecs(filterBrand, filterModelKeyword) {
-            resultsContent.innerHTML = '';
-            let matchFound = false;
-
-            if (filterBrand) {
-                // العرض عند الضغط على كروت السلايدر مباشرة
-                const brandData = globalDatabase[filterBrand];
-                if (brandData) {
-                    resultsTitle.innerHTML = `⚙️ المنظومة الميكانيكية لسيارات: <span style="color:var(--cyber-green);">${filterBrand}</span>`;
-                    
-                    for (const model in brandData) {
-                        renderModelTable(model, brandData[model]);
-                    }
-                    matchFound = true;
-                }
-            } else if (filterModelKeyword) {
-                // العرض عند استخدام خانة البحث النصي وكتابة اسم فئة أو موديل
-                resultsTitle.innerHTML = `🔍 نتائج الفلترة الحية للمصطلح: <span style="color:var(--cyber-amber);">${filterModelKeyword}</span>`;
-                
-                for (const brand in globalDatabase) {
-                    for (const model in globalDatabase[brand]) {
-                        // فلترة ذكية تبحث في الماركة أو الموديل أو الفئة
-                        if (model.toLowerCase().includes(filterModelKeyword.toLowerCase()) || brand.toLowerCase().includes(filterModelKeyword.toLowerCase())) {
-                            renderModelTable(`${brand} - ${model}`, globalDatabase[brand][model]);
-                            matchFound = true;
-                        }
-                    }
-                }
-            }
-
-            if (matchFound) {
-                liveResultsArea.style.display = 'block';
-                // تمرير ناعم تلقائي نحو منطقة النتائج ليشعر المستخدم بالتحديث
-                liveResultsArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            } else {
-                resultsTitle.innerHTML = `❌ لم يتم العثور على نتائج`;
-                resultsContent.innerHTML = `<p style="color:#6b7280; text-align:center; padding: 20px;">المصطلح غير مسجل حالياً في ملف cars-db.json.</p>`;
-                liveResultsArea.style.display = 'block';
-            }
-        }
-
-        // دالة مساعدة لبناء وهيكلة جداول الخصائص برمجياً
-        function renderModelTable(modelName, variantsArray) {
-            const block = document.createElement('div');
-            block.className = 'model-block';
-            block.innerHTML = `<div class="model-name">🚘 الموديل: ${modelName}</div>`;
+        // 1. عند اختيار الماركة من السلايدر
+        function onBrandSelect(card) {
+            selectedBrand = card.getAttribute('data-brand');
+            panelTitle.innerHTML = `تخصيص البحث لسيارات: <span style="color:var(--cyber-green);">${selectedBrand}</span>`;
             
-            let tableHtml = `
-                <table class="spec-table">
-                    <thead>
-                        <tr>
-                            <th>الفئة / المحرك</th>
-                            <th>سنة الصنع</th>
-                            <th>سعة ومواصفات الزيت</th>
-                            <th>علبة السرعات (Gearbox)</th>
-                            <th>ملاحظات الدعم الفني</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
+            // تصفير وتهيئة الخيارات المنسدلة
+            modelSelect.innerHTML = '<option value="">-- اختر الموديل --</option>';
+            yearSelect.innerHTML = '<option value="">-- اختر السنة --</option>';
+            yearSelect.disabled = true;
+            variantSelect.innerHTML = '<option value="">-- اختر الفئة --</option>';
+            variantSelect.disabled = true;
+            isolatedCarCard.style.display = 'none';
 
-            variantsArray.forEach(v => {
-                tableHtml += `
-                    <tr>
-                        <td><strong>${v.variant}</strong></td>
-                        <td>${v.year}</td>
-                        <td>${v.oil}</td>
-                        <td>${v.gearbox}</td>
-                        <td style="color:#9ca3af;">${v.notes}</td>
-                    </tr>
-                `;
+            // ملء قائمة الموديلات التابعة للماركة المختارة
+            const models = Object.keys(db[selectedBrand] || {});
+            models.forEach(m => {
+                modelSelect.innerHTML += `<option value="${m}">${m}</option>`;
             });
 
-            tableHtml += `</tbody></table>`;
-            block.innerHTML += tableHtml;
-            resultsContent.appendChild(block);
+            selectorPanel.style.display = 'block';
+            selectorPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
-        // معالجة كبس زر "ابحث الآن"
-        function executeSearch() {
-            const query = document.getElementById('brandSearchInput').value.trim();
-            if(query !== "") {
-                // التحقق إذا كان المدخل يطابق ماركة رئيسية بالكامل
-                if (globalDatabase[query.toUpperCase()]) {
-                    displayLiveSpecs(query.toUpperCase(), null);
-                } else {
-                    // وإلا، نقوم بعمل فلترة جزئية على الكلمة المكتوبة
-                    displayLiveSpecs(null, query);
-                }
-            }
+        // 2. عند اختيار الموديل
+        function onModelChange() {
+            const model = modelSelect.value;
+            yearSelect.innerHTML = '<option value="">-- اختر السنة --</option>';
+            variantSelect.innerHTML = '<option value="">-- اختر الفئة --</option>';
+            variantSelect.disabled = true;
+            isolatedCarCard.style.display = 'none';
+
+            if(!model) { yearSelect.disabled = true; return; }
+
+            // استخراج السنوات المتاحة لهذا الموديل من المصفوفة بدون تكرار
+            const arr = db[selectedBrand][model];
+            const years = [...new Set(arr.map(item => item.year))];
+            
+            years.forEach(y => {
+                yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
+            });
+            yearSelect.disabled = false;
         }
 
-        // السماح بالبحث بالضغط على زر Enter داخل حقل المدخلات
-        document.getElementById('brandSearchInput').addEventListener('keydown', (e) => {
-            if(e.key === 'Enter') executeSearch();
-        });
+        // 3. عند اختيار سنة الصنع
+        function onYearChange() {
+            const model = modelSelect.value;
+            const year = yearSelect.value;
+            variantSelect.innerHTML = '<option value="">-- اختر الفئة --</option>';
+            isolatedCarCard.style.display = 'none';
 
-        window.addEventListener('load', loadSliderBrandsFromJSON);
+            if(!year) { variantSelect.disabled = true; return; }
+
+            // فلترة الفئات المتوفرة في تلك السنة المحددة
+            const arr = db[selectedBrand][model];
+            const filteredVariants = arr.filter(item => item.year === year);
+
+            filteredVariants.forEach((v, index) => {
+                variantSelect.innerHTML += `<option value="${index}">${v.variant}</option>`;
+            });
+            variantSelect.disabled = false;
+        }
+
+        // 4. الاختيار النهائي والأخير (تثبيت الاستدعاء وعرض السيارة الفردية فقط)
+        function onVariantChange() {
+            const model = modelSelect.value;
+            const year = yearSelect.value;
+            const vIndex = variantSelect.value;
+
+            if(!vIndex) { isolatedCarCard.style.display = 'none'; return; }
+
+            // جلب كائن الفئة النهائي بدقة من الـ JSON
+            const arr = db[selectedBrand][model];
+            const filtered = arr.filter(item => item.year === year);
+            const finalCar = filtered[vIndex];
+
+            // حقن البيانات في الكارت المعزول للعميل لا يرى غيره
+            document.getElementById('resCarName').innerText = `${selectedBrand} ${model}`;
+            document.getElementById('resCarVariant').innerText = finalCar.variant;
+            document.getElementById('resCarYear').innerText = finalCar.year;
+            document.getElementById('resCarGearbox').innerText = finalCar.gearbox;
+            document.getElementById('resCarOil').innerText = finalCar.oil;
+            document.getElementById('resCarNotes').innerText = finalCar.notes;
+
+            // إظهار بطاقة السيارة وتمرير الشاشة نحوها بسلاسة ميكانيكية
+            isolatedCarCard.style.display = 'block';
+            isolatedCarCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        window.addEventListener('load', fetchDatabase);
     </script>
 </body>
 </html>
