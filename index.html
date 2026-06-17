@@ -19,54 +19,32 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-main);
             color: var(--text-light);
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
+            margin: 0; padding: 0; overflow-x: hidden;
         }
         
         /* شريط التنقل العلوي */
         .navbar {
-            background: var(--primary-dark);
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--border-blue);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            background: var(--primary-dark); padding: 15px 30px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 2px solid var(--border-blue); position: sticky; top: 0; z-index: 1000;
         }
         .logo {
-            color: var(--cyber-blue);
-            font-weight: bold;
-            font-size: 24px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            text-decoration: none;
+            color: var(--cyber-blue); font-weight: bold; font-size: 24px;
+            text-transform: uppercase; letter-spacing: 1px; cursor: pointer; text-decoration: none;
         }
         .logo span { color: #fff; }
         .nav-links { display: flex; gap: 20px; }
         .nav-links a { 
-            color: #9ca3af; 
-            text-decoration: none; 
-            font-size: 14px; 
-            transition: all 0.3s; 
-            cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 4px;
+            color: #9ca3af; text-decoration: none; font-size: 14px; 
+            transition: all 0.3s; cursor: pointer; padding: 5px 10px; border-radius: 4px;
         }
         .nav-links a:hover, .nav-links a.active { 
-            color: var(--cyber-blue); 
-            background: rgba(0, 242, 254, 0.05);
+            color: var(--cyber-blue); background: rgba(0, 242, 254, 0.05);
         }
         
         /* الأقسام والصفحات */
         .page-section {
-            display: none;
-            padding: 40px 20px 100px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+            display: none; padding: 40px 20px 100px 20px; max-width: 1200px; margin: 0 auto;
             animation: fadeIn 0.4s ease-in-out;
         }
         .page-section.active { display: block; }
@@ -78,19 +56,14 @@
 
         /* ستايل الصفحة الرئيسية */
         .hero-section {
-            text-align: center;
-            padding: 40px 20px 20px 20px;
+            text-align: center; padding: 40px 20px 20px 20px;
             background: radial-gradient(circle at 50% 50%, #0d1b3e 0%, transparent 70%);
         }
         .hero-section h2 { font-size: 36px; margin-bottom: 20px; }
         .hero-section p { color: #9ca3af; max-width: 600px; margin: 0 auto 30px; }
         
         .search-box {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            max-width: 500px;
-            margin: 0 auto 40px;
+            display: flex; justify-content: center; gap: 10px; max-width: 500px; margin: 0 auto 40px;
         }
         .search-box input {
             width: 100%; padding: 12px; border-radius: 8px;
@@ -101,14 +74,9 @@
             border-radius: 8px; color: #030712; font-weight: bold; cursor: pointer;
         }
 
-        /* ================= السلايدر الميكانيكي المطور بنسب متناسبة ================= */
+        /* ================= السلايدر الميكانيكي المطور ================= */
         .brands-slider-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-            overflow: hidden;
-            padding: 40px 0;
-            outline: none;
+            max-width: 1000px; margin: 0 auto; position: relative; overflow: hidden; padding: 40px 0; outline: none;
         }
         .brands-slider-container::before, .brands-slider-container::after {
             content: ""; height: 100%; width: 150px; position: absolute; top: 0; z-index: 2; pointer-events: none;
@@ -117,61 +85,63 @@
         .brands-slider-container::after { right: 0; background: linear-gradient(to left, var(--bg-main), transparent); }
 
         .brands-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            overflow-x: auto;
-            padding: 20px 0;
-            cursor: grab;
-            user-select: none;
-            -ms-overflow-style: none;  
-            scrollbar-width: none;  
+            display: flex; align-items: center; gap: 30px; overflow-x: auto; padding: 20px 0;
+            cursor: grab; user-select: none; -ms-overflow-style: none; scrollbar-width: none;  
         }
         .brands-wrapper::-webkit-scrollbar { display: none; }
         .brands-wrapper:active { cursor: grabbing; }
         
         .brand-card {
-            min-width: 160px;
-            height: 90px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-blue);
-            border-radius: 14px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            min-width: 160px; height: 90px; background: var(--bg-card); border: 1px solid var(--border-blue); border-radius: 14px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s, box-shadow 0.25s, opacity 0.25s;
-            opacity: 0.3;
-            transform: scale(0.85);
-            box-sizing: border-box;
-            cursor: pointer;
+            opacity: 0.3; transform: scale(0.85); box-sizing: border-box; cursor: pointer;
         }
         
         .brand-card.focused {
-            opacity: 1;
-            border-color: var(--cyber-blue);
-            box-shadow: 0 0 25px rgba(0, 242, 254, 0.35);
-            transform: scale(1.15);
-            background: rgba(11, 19, 41, 0.6);
+            opacity: 1; border-color: var(--cyber-blue); box-shadow: 0 0 25px rgba(0, 242, 254, 0.35);
+            transform: scale(1.15); background: rgba(11, 19, 41, 0.6);
         }
         .brand-card span { font-weight: bold; font-size: 15px; color: #fff; pointer-events: none; }
         .brand-card small { color: var(--cyber-blue); font-size: 10px; margin-top: 5px; text-transform: uppercase; pointer-events: none; }
 
-        /* ستايل كروت الأقسام الأخرى */
+        /* ================= منطقة العرض والنتائج الحية الجديدة ================= */
+        .results-container {
+            max-width: 1000px; margin: 40px auto 0 auto; padding: 20px;
+            background: var(--bg-card); border: 1px solid var(--border-blue); border-radius: 12px;
+            display: none; /* مخفية حتى يتم الاستدعاء */
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .results-title {
+            font-size: 20px; color: var(--cyber-blue); margin-top: 0; margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-blue); padding-bottom: 10px; text-align: right;
+        }
+        .model-block {
+            margin-bottom: 25px; background: rgba(255, 255, 255, 0.01);
+            padding: 15px; border-radius: 8px; border-right: 4px solid var(--cyber-amber);
+        }
+        .model-name {
+            font-size: 16px; color: var(--cyber-amber); font-weight: bold; margin-bottom: 10px;
+        }
+        .spec-table {
+            width: 100%; border-collapse: collapse; font-size: 14px; text-align: right;
+        }
+        .spec-table th, .spec-table td {
+            border: 1px solid rgba(31, 58, 96, 0.6); padding: 10px;
+        }
+        .spec-table th {
+            background: rgba(0, 242, 254, 0.05); color: var(--cyber-blue);
+        }
+        .spec-table td strong { color: var(--cyber-green); }
+
+        /* ستايل المكونات الأخرى للموقع */
         .items-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 30px;
         }
         .card {
-            background: var(--bg-card); border: 1px solid var(--border-blue);
-            border-radius: 12px; padding: 20px; transition: all 0.3s;
+            background: var(--bg-card); border: 1px solid var(--border-blue); border-radius: 12px; padding: 20px; transition: all 0.3s;
         }
-        .card:hover {
-            border-color: var(--cyber-blue); transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.1);
-        }
+        .card:hover { border-color: var(--cyber-blue); transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0, 242, 254, 0.1); }
         .card h3 { color: var(--cyber-blue); margin-top: 0; }
         .card p { color: #9ca3af; font-size: 14px; }
         .price-tag { color: var(--cyber-green); font-weight: bold; font-family: monospace; font-size: 16px; }
@@ -181,101 +151,71 @@
             border-top: 1px solid var(--border-blue); font-size: 12px; color: #6b7280;
             position: fixed; bottom: 0; width: 100%; box-sizing: border-box; z-index: 10;
         }
-        .secret-trigger { background: transparent; border: none; color: #1f3a60; cursor: pointer; margin-right: 10px; }
     </style>
 </head>
 <body>
 
     <div id="site-wrapper">
-        <nav class="navbar" id="navbar-view">
-            <div class="logo" onclick="navigateTo('home')">TUNCAR<span>.TN</span></div>
+        <!-- شريط التنقل -->
+        <nav class="navbar">
+            <div class="logo" onclick="location.reload()">TUNCAR<span>.TN</span></div>
             <div class="nav-links">
-                <a id="link-home" onclick="navigateTo('home')" class="active">الرئيسية</a>
-                <a id="link-engines" onclick="navigateTo('engines')">المحركات</a>
-                <a id="link-parts" onclick="navigateTo('parts')">قطع الغيار</a>
-                <a id="link-profile" onclick="navigateTo('profile')">حسابي</a>
+                <a id="link-home" class="active">الرئيسية</a>
+                <a href="cars-manager.html" style="color: var(--cyber-amber); font-weight: bold;">لوحة التحكم ⚙️</a>
             </div>
         </nav>
 
+        <!-- الصفحة الرئيسية -->
         <main id="page-home" class="page-section active">
             <section class="hero-section">
                 <h2>أول منصة ميكاترونيكية ذكية للسيارات في تونس</h2>
-                <p>ابحث عن قطع الغيار الدقيقة والمحركات لمنظومة سيارات VAG والماركات العالمية بضغطة زر واحدة.</p>
+                <p>تصفح وابحث في قاعدة بيانات منظومات VAG والماركات العالمية المخزنة حياً داخل كود المشروع.</p>
                 
                 <div class="search-box">
-                    <input type="text" id="brandSearchInput" placeholder="أدخل اسم القطعة أو السيارة (مثال: Golf 6 Culasse)...">
+                    <input type="text" id="brandSearchInput" placeholder="أدخل اسم الماركة أو الموديل (مثال: VOLKSWAGEN أو Golf 6)...">
                     <button onclick="executeSearch()">ابحث الآن</button>
                 </div>
 
+                <!-- حاوية السلايدر -->
                 <div class="brands-slider-container" id="sliderContainer" tabindex="0">
                     <div class="brands-wrapper" id="infiniteSlider">
-                        <div class="brand-card" data-brand="VOLKSWAGEN"><span>VOLKSWAGEN</span><small>VAG Group</small></div>
-                        <div class="brand-card" data-brand="AUDI"><span>AUDI</span><small>Vorsprung</small></div>
-                        <div class="brand-card" data-brand="SEAT"><span>SEAT</span><small>Barcelona</small></div>
-                        <div class="brand-card" data-brand="SKODA"><span>SKODA</span><small>Smart Choice</small></div>
-                        <div class="brand-card" data-brand="BMW"><span>BMW</span><small>Motorsport</small></div>
-                        <div class="brand-card" data-brand="MERCEDES"><span>MERCEDES</span><small>Luxury</small></div>
-                        <div class="brand-card" data-brand="PORSCHE"><span>PORSCHE</span><small>Performance</small></div>
+                        <!-- يتم حقن الكروت هنا ديناميكياً من ملف JSON -->
                     </div>
+                </div>
+
+                <!-- ================= منطقة عرض جداول البيانات الحية (البديل للـ Prompt) ================= -->
+                <div class="results-container" id="liveResultsArea">
+                    <h3 class="results-title" id="resultsTitle">نتائج البحث الميكانيكي</h3>
+                    <div id="resultsContent"></div>
                 </div>
             </section>
         </main>
 
-        <main id="page-engines" class="page-section">
-            <h2>قسم المحركات المتطورة (TSI / TDI)</h2>
-            <div class="items-grid">
-                <div class="card"><h3>محرك 1.4 TSI توربو كامل</h3><p>متوافق مع Golf 6. بحالة ممتازة.</p><div class="price-tag">4,800 DT</div></div>
-                <div class="card"><h3>محرك 2.0 TDI سيستم كامل</h3><p>متوافق مع Passat / Golf 6.</p><div class="price-tag">5,500 DT</div></div>
-            </div>
-        </main>
-
-        <main id="page-parts" class="page-section">
-            <h2>مخزن قطع الغيار الذكي</h2>
-            <div class="items-grid">
-                <div class="card"><h3>رأس المحرك (Culasse) - Golf 6</h3><p>أصلي، خاضع للاختبار الحراري.</p><div class="price-tag">1,200 DT</div></div>
-                <div class="card"><h3>مجموعة القابض (Kit Embrayage)</h3><p>مجموعة دبرياج كاملة Sachs.</p><div class="price-tag">850 DT</div></div>
-            </div>
-        </main>
-
-        <main id="page-profile" class="page-section">
-            <h2>ملف المستخدم الشخصي</h2>
-            <div class="profile-container">
-                <div class="profile-field"><label>الاسم الكامل</label><span>أحمد بن محمد</span></div>
-                <div class="profile-field"><label>نوع السيارة المسجلة</label><span>Volkswagen Golf 6</span></div>
-            </div>
-        </main>
-
         <footer>
             <span>© 2026 TUNCAR. جميع الحقوق محفوظة.</span>
-            <button class="secret-trigger" onclick="requestAdminAccess()">•</button>
         </footer>
     </div>
 
- <script src="js/app.js"></script>
     <script>
         const container = document.getElementById('sliderContainer');
         const slider = document.getElementById('infiniteSlider');
+        const liveResultsArea = document.getElementById('liveResultsArea');
+        const resultsContent = document.getElementById('resultsContent');
+        const resultsTitle = document.getElementById('resultsTitle');
         
-        // دالة سحب وقراءة ملف الـ JSON المرفوع على الموقع مباشرة واستهلاك الماركات
+        let globalDatabase = {}; // لحفظ نسخة من البيانات المجلوبة عالمياً
+
+        // 1. سحب البيانات ديناميكياً من ملف الـ JSON المرفوع بالموقع
         async function loadSliderBrandsFromJSON() {
             try {
-                // استدعاء ملف قاعدة البيانات الخاص بالموقع
                 const response = await fetch('cars-db.json');
-                if(!response.ok) throw new Error("قاعدة البيانات غير متوفرة حالياً");
+                if(!response.ok) throw new Error();
                 
-                const db = await response.json();
-                
-                // تفريغ محتوى السلايدر لبنائه برمجياً من الملف
+                globalDatabase = await response.json();
                 slider.innerHTML = '';
                 
-                const brandList = Object.keys(db);
+                const brandList = Object.keys(globalDatabase);
                 
-                if(brandList.length === 0) {
-                    slider.innerHTML = '<div style="color:#6b7280; width:100%; text-align:center;">لا توجد ماركات في الملف</div>';
-                    return;
-                }
-
-                // توليد الكروت الأصلية بناء على ماركات الملف
                 brandList.forEach(brand => {
                     const card = document.createElement('div');
                     card.className = 'brand-card';
@@ -284,7 +224,6 @@
                     slider.appendChild(card);
                 });
 
-                // مضاعفة الكروت برمجياً ثلاث مرات لضمان حركة الـ 360 درجة المتصلة دون حد غلق
                 const originalCards = Array.from(slider.children);
                 originalCards.forEach(card => {
                     let cloneBefore = card.cloneNode(true);
@@ -293,17 +232,16 @@
                     slider.appendChild(cloneAfter);
                 });
 
-                // تفعيل المنظومة الفيزيائية المتناسبة للحركة بعد بناء الكروت
-                setupSliderPhysics(originalCards.length, db);
+                setupSliderPhysics(originalCards.length);
 
             } catch (error) {
-                console.error("خطأ ميكانيكي في سحب ملف الـ JSON:", error);
-                slider.innerHTML = '<div style="color:#ef4444; width:100%; text-align:center;">فشل قراءة ملف cars-db.json</div>';
+                console.error("خطأ في قراءة ملف JSON قاعدة البيانات.");
+                slider.innerHTML = '<div style="color:#ef4444; width:100%; text-align:center;">يرجى إنشاء ملف cars-db.json في المستودع أولاً</div>';
             }
         }
 
-        // هندسة الحركية والتناسب التام والتحكم بالفأرة والكيبورد
-        function setupSliderPhysics(originalLength, fullDatabase) {
+        // 2. إدارة فيزياء السلايدر المتناسب 1:1
+        function setupSliderPhysics(originalLength) {
             let isDown = false;
             let startX, scrollLeft;
             let isDragging = false;
@@ -311,11 +249,8 @@
             const firstCard = slider.querySelector('.brand-card');
             if(!firstCard) return;
 
-            // حساب الأبعاد والمسافات بالـ Pixels بدقة كرت الشاشة لتثبيت التناسب 1:1
             const cardWidth = firstCard.getBoundingClientRect().width + 30; 
             const totalOriginalWidth = cardWidth * originalLength;
-
-            // تمرير افتراضي لمنتصف السلسلة المتصلة
             slider.scrollLeft = totalOriginalWidth;
 
             function updateCenterFocus() {
@@ -353,16 +288,13 @@
 
             slider.addEventListener('scroll', handleInfiniteScroll);
 
-            // تدوير روليت الماوس بدون فرملة أو تشنج
             slider.addEventListener('wheel', (e) => {
                 e.preventDefault();
                 slider.scrollLeft += e.deltaY * 1.0; 
             }, { passive: false });
 
-            // الضغط والسحب من أي فراغ أو أيقونة بشكل متناسب تماماً
             slider.addEventListener('mousedown', (e) => {
-                isDown = true;
-                isDragging = false;
+                isDown = true; isDragging = false;
                 startX = e.pageX - slider.offsetLeft;
                 scrollLeft = slider.scrollLeft;
             });
@@ -382,7 +314,6 @@
                 slider.scrollLeft = scrollLeft - walk;
             });
 
-            // معالجة اختيار الماركات
             slider.querySelectorAll('.brand-card').forEach(card => {
                 card.addEventListener('click', (e) => {
                     if (isDragging) return; 
@@ -402,8 +333,7 @@
             function selectBrand(cardElement) {
                 if(!cardElement) return;
                 const brandName = cardElement.getAttribute('data-brand');
-                document.getElementById('brandSearchInput').value = brandName + " ";
-                document.getElementById('brandSearchInput').focus();
+                document.getElementById('brandSearchInput').value = brandName;
                 
                 const containerCenter = slider.offsetWidth / 2;
                 const cardCenter = cardElement.offsetLeft + (cardElement.offsetWidth / 2);
@@ -412,46 +342,112 @@
                 cardElement.style.borderColor = "var(--cyber-green)";
                 setTimeout(() => updateCenterFocus(), 250);
 
-                // الكشف عن الموديلات المستخرجة من ملف الـ JSON
-                if(fullDatabase[brandName]) {
-                    console.log(`الموديلات النشطة من الملف لـ ${brandName}:`, Object.keys(fullDatabase[brandName]));
-                }
+                // استدعاء البيانات وحقنها حياً في الصفحة بدلاً من الـ Prompt
+                displayLiveSpecs(brandName, null);
             }
 
-            // نظام لوحة المفاتيح والأسهم
-            container.addEventListener('keydown', (e) => {
-                const cards = Array.from(slider.querySelectorAll('.brand-card'));
-                const focusedIndex = cards.findIndex(c => c.classList.contains('focused'));
-                
-                if (e.key === 'ArrowLeft') { 
-                    e.preventDefault();
-                    if (focusedIndex < cards.length - 1) selectBrand(cards[focusedIndex + 1]);
-                } else if (e.key === 'ArrowRight') { 
-                    e.preventDefault();
-                    if (focusedIndex > 0) selectBrand(cards[focusedIndex - 1]);
-                } else if (e.key === 'Enter') {
-                    e.preventDefault();
-                    const currentFocused = slider.querySelector('.brand-card.focused');
-                    if (currentFocused) {
-                        selectBrand(currentFocused);
-                        executeSearch();
-                    }
-                }
-            });
-
-            // تفعيل التحجيم والضبط عند التشغيل لأول مرة
             updateCenterFocus();
             snapToCenterSmooth();
         }
 
-        function executeSearch() {
-            const query = document.getElementById('brandSearchInput').value.trim().toUpperCase();
-            if(query !== "") {
-                alert(`🔍 جاري البحث الديناميكي في ملف cars-db.json عن: ${query}`);
+        // ================= دالة حقن وعرض الجداول حياً في الواجهة الرئيسية =================
+        function displayLiveSpecs(filterBrand, filterModelKeyword) {
+            resultsContent.innerHTML = '';
+            let matchFound = false;
+
+            if (filterBrand) {
+                // العرض عند الضغط على كروت السلايدر مباشرة
+                const brandData = globalDatabase[filterBrand];
+                if (brandData) {
+                    resultsTitle.innerHTML = `⚙️ المنظومة الميكانيكية لسيارات: <span style="color:var(--cyber-green);">${filterBrand}</span>`;
+                    
+                    for (const model in brandData) {
+                        renderModelTable(model, brandData[model]);
+                    }
+                    matchFound = true;
+                }
+            } else if (filterModelKeyword) {
+                // العرض عند استخدام خانة البحث النصي وكتابة اسم فئة أو موديل
+                resultsTitle.innerHTML = `🔍 نتائج الفلترة الحية للمصطلح: <span style="color:var(--cyber-amber);">${filterModelKeyword}</span>`;
+                
+                for (const brand in globalDatabase) {
+                    for (const model in globalDatabase[brand]) {
+                        // فلترة ذكية تبحث في الماركة أو الموديل أو الفئة
+                        if (model.toLowerCase().includes(filterModelKeyword.toLowerCase()) || brand.toLowerCase().includes(filterModelKeyword.toLowerCase())) {
+                            renderModelTable(`${brand} - ${model}`, globalDatabase[brand][model]);
+                            matchFound = true;
+                        }
+                    }
+                }
+            }
+
+            if (matchFound) {
+                liveResultsArea.style.display = 'block';
+                // تمرير ناعم تلقائي نحو منطقة النتائج ليشعر المستخدم بالتحديث
+                liveResultsArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                resultsTitle.innerHTML = `❌ لم يتم العثور على نتائج`;
+                resultsContent.innerHTML = `<p style="color:#6b7280; text-align:center; padding: 20px;">المصطلح غير مسجل حالياً في ملف cars-db.json.</p>`;
+                liveResultsArea.style.display = 'block';
             }
         }
 
-        // تشغيل سحب وقراءة الملف فور تحميل الصفحة بالكامل
+        // دالة مساعدة لبناء وهيكلة جداول الخصائص برمجياً
+        function renderModelTable(modelName, variantsArray) {
+            const block = document.createElement('div');
+            block.className = 'model-block';
+            block.innerHTML = `<div class="model-name">🚘 الموديل: ${modelName}</div>`;
+            
+            let tableHtml = `
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>الفئة / المحرك</th>
+                            <th>سنة الصنع</th>
+                            <th>سعة ومواصفات الزيت</th>
+                            <th>علبة السرعات (Gearbox)</th>
+                            <th>ملاحظات الدعم الفني</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            variantsArray.forEach(v => {
+                tableHtml += `
+                    <tr>
+                        <td><strong>${v.variant}</strong></td>
+                        <td>${v.year}</td>
+                        <td>${v.oil}</td>
+                        <td>${v.gearbox}</td>
+                        <td style="color:#9ca3af;">${v.notes}</td>
+                    </tr>
+                `;
+            });
+
+            tableHtml += `</tbody></table>`;
+            block.innerHTML += tableHtml;
+            resultsContent.appendChild(block);
+        }
+
+        // معالجة كبس زر "ابحث الآن"
+        function executeSearch() {
+            const query = document.getElementById('brandSearchInput').value.trim();
+            if(query !== "") {
+                // التحقق إذا كان المدخل يطابق ماركة رئيسية بالكامل
+                if (globalDatabase[query.toUpperCase()]) {
+                    displayLiveSpecs(query.toUpperCase(), null);
+                } else {
+                    // وإلا، نقوم بعمل فلترة جزئية على الكلمة المكتوبة
+                    displayLiveSpecs(null, query);
+                }
+            }
+        }
+
+        // السماح بالبحث بالضغط على زر Enter داخل حقل المدخلات
+        document.getElementById('brandSearchInput').addEventListener('keydown', (e) => {
+            if(e.key === 'Enter') executeSearch();
+        });
+
         window.addEventListener('load', loadSliderBrandsFromJSON);
     </script>
 </body>
