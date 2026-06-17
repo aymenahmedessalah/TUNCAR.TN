@@ -1,31 +1,38 @@
 {
-  "VOLKSWAGEN": {
+  "Volkswagen": {
     "Golf 6": [
-      {
-        "variant": "1.4 TSI توربو",
-        "year": "2011",
-        "oil": "3.6 لتر 5W30",
-        "gearbox": "DSG 7 / KGV",
-        "notes": "محرك ذو طلمبة ضغط عالي حساس، يتطلب فحص الجنزير بانتظام."
-      },
-      {
-        "variant": "2.0 TDI ديزل",
-        "year": "2012",
-        "oil": "4.3 لتر 5W40",
-        "gearbox": "Manual 6",
-        "notes": "منظومة حقن Common Rail متطورة، متوافق مع الديزل التونسي الخالي من الكبريت."
-      }
+      { "variant": "1.4 TSI (CAXA)", "year": 2009, "gearbox": "Manual 6-Speed", "oil": "4.0L - VW 504.00 / 507.00 (5W30)", "notes": "OEM Spark plugs: 03C905601A. Check timing chain tensioner." },
+      { "variant": "1.4 TSI (CAXA)", "year": 2010, "gearbox": "DSG Automatic 7-Speed (DQ200)", "oil": "4.0L - VW 504.00 / 507.00 (5W30)", "notes": "DQ200 dry dual-clutch. Requires regular mechatronic fluid inspection." },
+      { "variant": "1.4 TSI (CAXA)", "year": 2011, "gearbox": "Manual 6-Speed", "oil": "4.0L - VW 504.00 (5W30)", "notes": "N75 valve inspection recommended if boost lag occurs." },
+      { "variant": "1.4 TSI (CAXA)", "year": 2012, "gearbox": "DSG Automatic 7-Speed (DQ200)", "oil": "4.0L - VW 504.00 (5W30)", "notes": "End of Golf 6 production year. Highly stable software version." },
+      { "variant": "2.0 TDI (CRBC)", "year": 2010, "gearbox": "DSG Automatic 6-Speed (DQ250)", "oil": "4.3L - VW 507.00 DPF Safe (5W30)", "notes": "Common rail engine. Wet clutch DSG requires fluid change every 60k km." },
+      { "variant": "2.0 TDI (CRBC)", "year": 2011, "gearbox": "Manual 6-Speed", "oil": "4.3L - VW 507.00 DPF Safe", "notes": "Check EGR valve cleaning intervals to maintain DPF efficiency." },
+      { "variant": "1.6 TDI (CAYC)", "year": 2011, "gearbox": "Manual 5-Speed", "oil": "4.3L - VW 507.00 (0W30/5W30)", "notes": "Highly economical engine. Piezo injectors require high-quality fuel filter changes." }
+    ],
+    "Golf 7": [
+      { "variant": "1.4 TSI BlueMotion (CHPA)", "year": 2013, "gearbox": "DSG 7-Speed", "oil": "4.0L - VW 504.00 (5W30)", "notes": "EA211 engine family with timing belt (not chain). Smooth actuation." },
+      { "variant": "1.4 TSI BlueMotion (CHPA)", "year": 2014, "gearbox": "Manual 6-Speed", "oil": "4.0L - VW 504.00", "notes": "ACT (Active Cylinder Management) checking via OBD scanner recommended." },
+      { "variant": "2.0 GTI (CHHA)", "year": 2015, "gearbox": "DSG 6-Speed (DQ250)", "oil": "5.7L - VW 504.00 / 508.00", "notes": "EA888 Gen 3 engine. High thermal efficiency. Check water pump housing for leaks." },
+      { "variant": "2.0 GTI (CHHA)", "year": 2016, "gearbox": "DSG 6-Speed (DQ250)", "oil": "5.7L - VW 504.00", "notes": "Electronic differential lock (VAQ) fluid service needed if tracking." }
+    ],
+    "Passat B8": [
+      { "variant": "2.0 TDI BlueMotion", "year": 2016, "gearbox": "DSG 6-Speed", "oil": "4.7L - VW 507.00", "notes": "AdBlue system integration. Euro 6 compliant technical parameters." },
+      { "variant": "1.5 TSI Evo (DADA)", "year": 2019, "gearbox": "DSG 7-Speed", "oil": "4.3L - VW 508.00 (0W20)", "notes": "EA211 Evo engine. Uses Miller combustion cycle and variable turbine geometry." }
     ]
   },
-  "AUDI": {
-    "A4": [
-      {
-        "variant": "2.0 TFSI",
-        "year": "2014",
-        "oil": "4.5 لتر 5W30",
-        "gearbox": "S-Tronic",
-        "notes": "منظومة دفع كواترو ميكاترونيك، يجب فحص صمام الـ PCV."
-      }
+  "Audi": {
+    "A3 8V": [
+      { "variant": "1.8 TFSI (CJSA)", "year": 2014, "gearbox": "S-Tronic 7-Speed", "oil": "5.2L - VW 504.00", "notes": "Dual injection system (MPI + FSI). Solves carbon buildup on intake valves." },
+      { "variant": "2.0 TFSI Quattro", "year": 2016, "gearbox": "S-Tronic 6-Speed", "oil": "5.7L - VW 504.00", "notes": "Haldex Generation 5 AWD system. Service Haldex coupling every 3 years." }
+    ],
+    "A4 B9": [
+      { "variant": "2.0 TFSI Ultra (CVKB)", "year": 2017, "gearbox": "S-Tronic 7-Speed (DL382)", "oil": "5.2L - VW 508.00 (0W20)", "notes": "B-Cycle combustion engine optimized for fuel efficiency. Wet dual-clutch transmission." }
+    ]
+  },
+  "BMW": {
+    "3 Series F30": [
+      { "variant": "320i (N20)", "year": 2013, "gearbox": "ZF Automatic 8-Speed", "oil": "5.0L - BMW Longlife-01 (5W30)", "notes": "TwinPower Turbo. Monitor oil feed lines and timing chain guide wear." },
+      { "variant": "320d (N47)", "year": 2014, "gearbox": "ZF Automatic 8-Speed", "oil": "5.2L - BMW Longlife-04", "notes": "Diesel variant. Highly robust torque converter transmission parameters." }
     ]
   }
 }
