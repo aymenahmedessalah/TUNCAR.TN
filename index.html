@@ -1,4 +1,257 @@
-<script src="js/app.js"></script>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TUNCAR | المنصة الذكية لقطع غيار السيارات</title>
+    <style>
+        :root {
+            --primary-dark: #0b1329;
+            --bg-main: #030712;
+            --cyber-blue: #00f2fe;
+            --cyber-green: #05ffc5;
+            --cyber-amber: #ffb800;
+            --text-light: #f3f4f6;
+            --border-blue: #1f3a60;
+            --bg-card: #0f172a;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        /* شريط التنقل العلوي */
+        .navbar {
+            background: var(--primary-dark);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border-blue);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo {
+            color: var(--cyber-blue);
+            font-weight: bold;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .logo span { color: #fff; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { 
+            color: #9ca3af; 
+            text-decoration: none; 
+            font-size: 14px; 
+            transition: all 0.3s; 
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        .nav-links a:hover, .nav-links a.active { 
+            color: var(--cyber-blue); 
+            background: rgba(0, 242, 254, 0.05);
+        }
+        
+        /* الأقسام والصفحات */
+        .page-section {
+            display: none;
+            padding: 40px 20px 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .page-section.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ستايل الصفحة الرئيسية */
+        .hero-section {
+            text-align: center;
+            padding: 40px 20px 20px 20px;
+            background: radial-gradient(circle at 50% 50%, #0d1b3e 0%, transparent 70%);
+        }
+        .hero-section h2 { font-size: 36px; margin-bottom: 20px; }
+        .hero-section p { color: #9ca3af; max-width: 600px; margin: 0 auto 30px; }
+        
+        .search-box {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto 40px;
+        }
+        .search-box input {
+            width: 100%; padding: 12px; border-radius: 8px;
+            border: 1px solid var(--border-blue); background: var(--primary-dark); color: #fff;
+        }
+        .search-box button {
+            padding: 12px 25px; background: var(--cyber-blue); border: none;
+            border-radius: 8px; color: #030712; font-weight: bold; cursor: pointer;
+        }
+
+        /* ================= السلايدر الميكانيكي المطور بنسب متناسبة ================= */
+        .brands-slider-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            padding: 40px 0;
+            outline: none;
+        }
+        .brands-slider-container::before, .brands-slider-container::after {
+            content: ""; height: 100%; width: 150px; position: absolute; top: 0; z-index: 2; pointer-events: none;
+        }
+        .brands-slider-container::before { left: 0; background: linear-gradient(to right, var(--bg-main), transparent); }
+        .brands-slider-container::after { right: 0; background: linear-gradient(to left, var(--bg-main), transparent); }
+
+        .brands-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            overflow-x: auto;
+            padding: 20px 0;
+            cursor: grab;
+            user-select: none;
+            -ms-overflow-style: none;  
+            scrollbar-width: none;  
+        }
+        .brands-wrapper::-webkit-scrollbar { display: none; }
+        .brands-wrapper:active { cursor: grabbing; }
+        
+        .brand-card {
+            min-width: 160px;
+            height: 90px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-blue);
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s, box-shadow 0.25s, opacity 0.25s;
+            opacity: 0.3;
+            transform: scale(0.85);
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+        
+        .brand-card.focused {
+            opacity: 1;
+            border-color: var(--cyber-blue);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.35);
+            transform: scale(1.15);
+            background: rgba(11, 19, 41, 0.6);
+        }
+        .brand-card span { font-weight: bold; font-size: 15px; color: #fff; pointer-events: none; }
+        .brand-card small { color: var(--cyber-blue); font-size: 10px; margin-top: 5px; text-transform: uppercase; pointer-events: none; }
+
+        /* ستايل كروت الأقسام الأخرى */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border-blue);
+            border-radius: 12px; padding: 20px; transition: all 0.3s;
+        }
+        .card:hover {
+            border-color: var(--cyber-blue); transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.1);
+        }
+        .card h3 { color: var(--cyber-blue); margin-top: 0; }
+        .card p { color: #9ca3af; font-size: 14px; }
+        .price-tag { color: var(--cyber-green); font-weight: bold; font-family: monospace; font-size: 16px; }
+
+        footer {
+            text-align: center; padding: 20px; background: var(--primary-dark);
+            border-top: 1px solid var(--border-blue); font-size: 12px; color: #6b7280;
+            position: fixed; bottom: 0; width: 100%; box-sizing: border-box; z-index: 10;
+        }
+        .secret-trigger { background: transparent; border: none; color: #1f3a60; cursor: pointer; margin-right: 10px; }
+    </style>
+</head>
+<body>
+
+    <div id="site-wrapper">
+        <nav class="navbar" id="navbar-view">
+            <div class="logo" onclick="navigateTo('home')">TUNCAR<span>.TN</span></div>
+            <div class="nav-links">
+                <a id="link-home" onclick="navigateTo('home')" class="active">الرئيسية</a>
+                <a id="link-engines" onclick="navigateTo('engines')">المحركات</a>
+                <a id="link-parts" onclick="navigateTo('parts')">قطع الغيار</a>
+                <a id="link-profile" onclick="navigateTo('profile')">حسابي</a>
+            </div>
+        </nav>
+
+        <main id="page-home" class="page-section active">
+            <section class="hero-section">
+                <h2>أول منصة ميكاترونيكية ذكية للسيارات في تونس</h2>
+                <p>ابحث عن قطع الغيار الدقيقة والمحركات لمنظومة سيارات VAG والماركات العالمية بضغطة زر واحدة.</p>
+                
+                <div class="search-box">
+                    <input type="text" id="brandSearchInput" placeholder="أدخل اسم القطعة أو السيارة (مثال: Golf 6 Culasse)...">
+                    <button onclick="executeSearch()">ابحث الآن</button>
+                </div>
+
+                <div class="brands-slider-container" id="sliderContainer" tabindex="0">
+                    <div class="brands-wrapper" id="infiniteSlider">
+                        <div class="brand-card" data-brand="VOLKSWAGEN"><span>VOLKSWAGEN</span><small>VAG Group</small></div>
+                        <div class="brand-card" data-brand="AUDI"><span>AUDI</span><small>Vorsprung</small></div>
+                        <div class="brand-card" data-brand="SEAT"><span>SEAT</span><small>Barcelona</small></div>
+                        <div class="brand-card" data-brand="SKODA"><span>SKODA</span><small>Smart Choice</small></div>
+                        <div class="brand-card" data-brand="BMW"><span>BMW</span><small>Motorsport</small></div>
+                        <div class="brand-card" data-brand="MERCEDES"><span>MERCEDES</span><small>Luxury</small></div>
+                        <div class="brand-card" data-brand="PORSCHE"><span>PORSCHE</span><small>Performance</small></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <main id="page-engines" class="page-section">
+            <h2>قسم المحركات المتطورة (TSI / TDI)</h2>
+            <div class="items-grid">
+                <div class="card"><h3>محرك 1.4 TSI توربو كامل</h3><p>متوافق مع Golf 6. بحالة ممتازة.</p><div class="price-tag">4,800 DT</div></div>
+                <div class="card"><h3>محرك 2.0 TDI سيستم كامل</h3><p>متوافق مع Passat / Golf 6.</p><div class="price-tag">5,500 DT</div></div>
+            </div>
+        </main>
+
+        <main id="page-parts" class="page-section">
+            <h2>مخزن قطع الغيار الذكي</h2>
+            <div class="items-grid">
+                <div class="card"><h3>رأس المحرك (Culasse) - Golf 6</h3><p>أصلي، خاضع للاختبار الحراري.</p><div class="price-tag">1,200 DT</div></div>
+                <div class="card"><h3>مجموعة القابض (Kit Embrayage)</h3><p>مجموعة دبرياج كاملة Sachs.</p><div class="price-tag">850 DT</div></div>
+            </div>
+        </main>
+
+        <main id="page-profile" class="page-section">
+            <h2>ملف المستخدم الشخصي</h2>
+            <div class="profile-container">
+                <div class="profile-field"><label>الاسم الكامل</label><span>أحمد بن محمد</span></div>
+                <div class="profile-field"><label>نوع السيارة المسجلة</label><span>Volkswagen Golf 6</span></div>
+            </div>
+        </main>
+
+        <footer>
+            <span>© 2026 TUNCAR. جميع الحقوق محفوظة.</span>
+            <button class="secret-trigger" onclick="requestAdminAccess()">•</button>
+        </footer>
+    </div>
+
+ <script src="js/app.js"></script>
     <script>
         const container = document.getElementById('sliderContainer');
         const slider = document.getElementById('infiniteSlider');
@@ -201,3 +454,5 @@
         // تشغيل سحب وقراءة الملف فور تحميل الصفحة بالكامل
         window.addEventListener('load', loadSliderBrandsFromJSON);
     </script>
+</body>
+</html>
