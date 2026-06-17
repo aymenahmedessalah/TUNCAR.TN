@@ -63,14 +63,14 @@
         
         /* الأقسام والصفحات الافتراضية */
         .page-section {
-            display: none; /* إخفاء كافة الصفحات افتراضياً ويتم تفعيلها بـ JS */
-            padding: 60px 20px 100px 20px;
+            display: none;
+            padding: 40px 20px 100px 20px;
             max-width: 1200px;
             margin: 0 auto;
             animation: fadeIn 0.4s ease-in-out;
         }
         .page-section.active {
-            display: block; /* عرض الصفحة النشطة فقط */
+            display: block;
         }
 
         @keyframes fadeIn {
@@ -81,17 +81,18 @@
         /* ستايل الصفحة الرئيسية */
         .hero-section {
             text-align: center;
-            padding: 60px 20px;
+            padding: 40px 20px 20px 20px;
             background: radial-gradient(circle at 50% 50%, #0d1b3e 0%, transparent 70%);
         }
         .hero-section h2 { font-size: 36px; margin-bottom: 20px; }
         .hero-section p { color: #9ca3af; max-width: 600px; margin: 0 auto 30px; }
+        
         .search-box {
             display: flex;
             justify-content: center;
             gap: 10px;
             max-width: 500px;
-            margin: 0 auto;
+            margin: 0 auto 40px;
         }
         .search-box input {
             width: 100%; padding: 12px; border-radius: 8px;
@@ -100,6 +101,75 @@
         .search-box button {
             padding: 12px 25px; background: var(--cyber-blue); border: none;
             border-radius: 8px; color: #030712; font-weight: bold; cursor: pointer;
+        }
+
+        /* ================= ستايل سلايدر الماركات التفاعلي المطور ================= */
+        .brands-slider-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        /* تظليل جانبي ذكي لمنح السلايدر عمقاً نيونياً */
+        .brands-slider-container::before, .brands-slider-container::after {
+            content: ""; height: 100%; width: 80px; position: absolute; top: 0; z-index: 2; pointer-events: none;
+        }
+        .brands-slider-container::before { left: 0; background: linear-gradient(to right, var(--bg-main), transparent); }
+        .brands-slider-container::after { right: 0; background: linear-gradient(to left, var(--bg-main), transparent); }
+
+        .brands-wrapper {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 15px 0;
+            cursor: grab;
+            user-select: none;
+            /* إخفاء شريط التمرير الافتراضي للمتصفحات */
+            -ms-overflow-style: none;  
+            scrollbar-width: none;  
+        }
+        .brands-wrapper::-webkit-scrollbar {
+            display: none; 
+        }
+        .brands-wrapper:active {
+            cursor: grabbing;
+        }
+        
+        .brand-card {
+            min-width: 140px;
+            height: 80px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-blue);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            pointer-events: none; /* لمنع تداخل سحب الصور مع سحب الحاوية نفسها */
+        }
+        .brands-wrapper:hover .brand-card {
+            opacity: 0.6;
+        }
+        .brands-wrapper .brand-card:hover {
+            opacity: 1;
+            border-color: var(--cyber-blue);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+            transform: scale(1.05);
+        }
+        .brand-card span {
+            font-weight: bold;
+            font-size: 14px;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+        .brand-card small {
+            color: var(--cyber-blue);
+            font-size: 10px;
+            margin-top: 4px;
+            text-transform: uppercase;
         }
 
         /* ستايل شبكة كروت الأقسام (المحركات وقطع الغيار) */
@@ -139,7 +209,7 @@
             border-bottom: 1px solid rgba(31, 58, 96, 0.4);
             padding-bottom: 10px;
         }
-        .profile-field label { color: var(--text-gray); font-size: 12px; display: block; margin-bottom: 5px; }
+        .profile-field label { color: #6b7280; font-size: 12px; display: block; margin-bottom: 5px; }
         .profile-field span { font-size: 16px; color: #fff; }
 
         footer {
@@ -161,7 +231,6 @@
     <div id="site-wrapper">
         <!-- شريط التنقل العلوي الفعال -->
         <nav class="navbar" id="navbar-view">
-            <!-- اللوجو يعيدك دائما للرئيسية عبر الدالة الكودية -->
             <div class="logo" onclick="navigateTo('home')">TUNCAR<span>.TN</span></div>
             <div class="nav-links">
                 <a id="link-home" onclick="navigateTo('home')" class="active">الرئيسية</a>
@@ -174,11 +243,27 @@
         <!-- ================= الصفحة الرئيسية ================= -->
         <main id="page-home" class="page-section active">
             <section class="hero-section">
-                <h2>أول منصة ميكاترونيكية ذكية لسيارات في تونس</h2>
-                <p>ابحث عن قطع الغيار الدقيقة والمحركات لمنظومة سيارات Volkswagen والماركات العالمية بضغطة زر واحدة.</p>
+                <h2>أول منصة ميكاترونيكية ذكية للسيارات في تونس</h2>
+                <p>ابحث عن قطع الغيار الدقيقة والمحركات لمنظومة سيارات VAG والماركات العالمية بضغطة زر واحدة.</p>
+                
                 <div class="search-box">
                     <input type="text" placeholder="أدخل اسم القطعة أو السيارة (مثال: Golf 6 Culasse)...">
                     <button>ابحث الآن</button>
+                </div>
+
+                <!-- سلايدر الماركات التفاعلي الفاخر بالماوس والسحب -->
+                <div class="brands-slider-container">
+                    <div class="brands-wrapper" id="interactiveSlider">
+                        <div class="brand-card"><span>VOLKSWAGEN</span><small>VAG Group</small></div>
+                        <div class="brand-card"><span>AUDI</span><small>Vorsprung</small></div>
+                        <div class="brand-card"><span>SEAT</span><small>Barcelona</small></div>
+                        <div class="brand-card"><span>SKODA</span><small>Smart Choice</small></div>
+                        <div class="brand-card"><span>BMW</span><small>Motorsport</small></div>
+                        <div class="brand-card"><span>MERCEDES</span><small>Luxury</small></div>
+                        <div class="brand-card"><span>PORSCHE</span><small>Performance</small></div>
+                        <div class="brand-card"><span>PUEGEOT</span><small>Motion</small></div>
+                        <div class="brand-card"><span>RENAULT</span><small>Passion</small></div>
+                    </div>
                 </div>
             </section>
         </main>
@@ -260,5 +345,43 @@
     </div>
 
     <script src="js/app.js"></script>
+    <script>
+        // تفعيل خواص التحريك الميكانيكي للسلايدر بالـ Mouse Wheel والـ Drag
+        const slider = document.getElementById('interactiveSlider');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        // 1. التحكم عبر روليت الماوس (Mouse Wheel Horizontal Scroll)
+        slider.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            slider.scrollLeft += e.deltaY * 1.5; // تسريع الحركة لمرونة أكبر
+        }, { passive: false });
+
+        // 2. التحكم عبر الضغط والسحب (Hold Click & Drag)
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            slider.style.scrollBehavior = 'auto'; // إلغاء السلاسة المؤقتة أثناء السحب لسرعة الاستجابة فورا
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            isDown = false;
+        });
+
+        slider.addEventListener('mouseup', () => {
+            isDown = false;
+            slider.style.scrollBehavior = 'smooth'; // إعادة السلاسة التلقائية بعد الإفلات
+        });
+
+        slider.addEventListener('mousemove', (e) => {
+            if(!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2; // معامل سرعة السحب والتدحرج
+            slider.scrollLeft = scrollLeft - walk;
+        });
+    </script>
 </body>
 </html>
