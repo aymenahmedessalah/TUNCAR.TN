@@ -1,33 +1,13 @@
-// الإعدادات الأمنية للمالك
+/**
+ * TUNCAR Core Logic & Security Authentication
+ */
 const SECURITY_GATE = {
-    // يمكنك تغيير الماستر باس من هنا قبل الرفع على GitHub
-    masterPass: "TuncarMaster2026",
+    masterPass: "TuncarMaster2026", // رمز العبور الماستر الخاص بك
     dashboardURL: "dashboard.html"
 };
 
-// عند تحميل الصفحة بالكامل، نقوم بحقن البلوكات الأساسية للموقع
-document.addEventListener("DOMContentLoaded", () => {
-    // محاكاة تحميل المكونات الافتراضية للموقع
-    initiateMainSite();
-});
-
-function initiateMainSite() {
-    const navbarView = document.getElementById("navbar-view");
-    const mainContent = document.getElementById("main-content");
-
-    // هنا نقوم بحقن واجهة المستخدم العادية (يمكنك لاحقاً استخدام fetch لتحميل ملفات منفصلة)
-    if (navbarView) {
-        navbarView.innerHTML = `
-            <nav style="background: #0b1329; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #1f3a60;">
-                <div style="color: #00f2fe; font-weight: bold; font-size: 22px;">TUNCAR<span style="color:#fff">.tn</span></div>
-                <div style="color: #fff; font-size: 14px;">الرئيسية | قطع الغيار | الخدمات | اتصل بنا</div>
-            </nav>
-        `;
-    }
-}
-
 /**
- * دالة طلب صلاحيات المالك لفتح لوحة التحكم الفوقية
+ * دالة طلب صلاحيات المالك لفتح لوحة التحكم العليا
  */
 function requestAdminAccess() {
     const userInput = prompt("🚨 نظام التحكم الأعلى لمالك الموقع - أدخل الماستر باس للعبور:");
@@ -41,26 +21,20 @@ function requestAdminAccess() {
 }
 
 /**
- * حقن لوحة المراقبة الأسطورية في واجهة المستخدم
+ * حقن لوحة المراقبة الأسطورية وإخفاء معالم الموقع العادي
  */
 function launchHQDashboard() {
-    const mainContent = document.getElementById('main-content');
-    const navbarView = document.getElementById('navbar-view');
+    const siteWrapper = document.getElementById('site-wrapper');
 
-    if (mainContent) {
-        // إخفاء الـ Navbar الأساسي للموقع لتوفير مساحة كاملة لغرفة العمليات
-        if (navbarView) navbarView.style.display = 'none';
-
-        // حقن لوحة التحكم عبر iframe لتظل مستقلة تماماً داخل الصفحة وبأبعاد شاشة كاملة
-        mainContent.style.padding = "0";
-        mainContent.style.margin = "0";
-        mainContent.innerHTML = `
-            <iframe src="${SECURITY_GATE.dashboardURL}" style="width: 100%; height: 100vh; border: none; background: #030712;"></iframe>
+    if (siteWrapper) {
+        // تحويل الواجهة بالكامل وبأبعاد الشاشة المطلقة لغرفة العمليات
+        siteWrapper.innerHTML = `
+            <iframe src="${SECURITY_GATE.dashboardURL}" style="width: 100%; height: 100vh; border: none; background: #030712; margin:0; padding:0; position:fixed; top:0; left:0; z-index:999999;"></iframe>
         `;
     }
 }
 
-// تشغيل نظام الاختصار الذكي (Ctrl + Shift + A) للمالك
+// تشغيل نظام الاختصار الذكي المباشر (Ctrl + Shift + A) للمالك
 window.addEventListener('keydown', function(e) {
     if (e.ctrlKey && e.shiftKey && e.code === 'KeyA') {
         e.preventDefault();
