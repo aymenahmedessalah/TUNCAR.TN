@@ -101,14 +101,14 @@
             border-radius: 8px; color: #030712; font-weight: bold; cursor: pointer;
         }
 
-        /* ================= ستايل السلايدر الميكانيكي الدائري 360 درجة ================= */
+        /* ================= ستايل السلايدر الميكانيكي الدائري فائق الانسيابية ================= */
         .brands-slider-container {
             max-width: 1000px;
             margin: 0 auto;
             position: relative;
             overflow: hidden;
             padding: 40px 0;
-            outline: none; /* لإتاحة التركيز عبر الكيبورد */
+            outline: none;
         }
         .brands-slider-container::before, .brands-slider-container::after {
             content: ""; height: 100%; width: 150px; position: absolute; top: 0; z-index: 2; pointer-events: none;
@@ -121,7 +121,7 @@
             align-items: center;
             gap: 30px;
             overflow-x: auto;
-            scroll-behavior: smooth;
+            /* تم حذف scroll-behavior من هنا لمنع التشنج أثناء السحب الفوري */
             padding: 20px 0;
             cursor: grab;
             user-select: none;
@@ -141,13 +141,14 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s, box-shadow 0.4s, opacity 0.4s;
-            opacity: 0.4;
+            /* تحسين ترانزيشن التكبير ليكون فائق النعومة */
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s, box-shadow 0.3s, opacity 0.3s;
+            opacity: 0.3;
             transform: scale(0.85);
             box-sizing: border-box;
             cursor: pointer;
         }
-        /* الماركة المتمركزة في المنتصف (تضخيم ونبض نيون) */
+        
         .brand-card.focused {
             opacity: 1;
             border-color: var(--cyber-blue);
@@ -218,10 +219,9 @@
                     <button onclick="executeSearch()">ابحث الآن</button>
                 </div>
 
-                <!-- حاوية السلايدر اللانهائي 360 درجة (مركّز عليها الكيبورد والماوس) -->
+                <!-- حاوية السلايدر اللانهائي -->
                 <div class="brands-slider-container" id="sliderContainer" tabindex="0">
                     <div class="brands-wrapper" id="infiniteSlider">
-                        <!-- العناصر الحقيقية وسيتم مضاعفتها تلقائياً عبر الجافا سكريبت لضمان الدوران اللانهائي -->
                         <div class="brand-card" data-brand="VOLKSWAGEN"><span>VOLKSWAGEN</span><small>VAG Group</small></div>
                         <div class="brand-card" data-brand="AUDI"><span>AUDI</span><small>Vorsprung</small></div>
                         <div class="brand-card" data-brand="SEAT"><span>SEAT</span><small>Barcelona</small></div>
@@ -234,7 +234,7 @@
             </section>
         </main>
 
-        <!-- بقية الصفحات (المحركات / قطع الغيار / حسابي) -->
+        <!-- بقية الصفحات -->
         <main id="page-engines" class="page-section">
             <h2>قسم المحركات المتطورة (TSI / TDI)</h2>
             <div class="items-grid">
@@ -270,7 +270,7 @@
         const container = document.getElementById('sliderContainer');
         const slider = document.getElementById('infiniteSlider');
         
-        // 1. مضاعفة العناصر برمجياً لثلاث مجموعات لضمان السحب اللانهائي المستمر 360 درجة بدون فجوات
+        // 1. مضاعفة الماركات لعمل حلقة 360 درجة ممتدة
         const originalCards = Array.from(slider.children);
         originalCards.forEach(card => {
             let cloneBefore = card.cloneNode(true);
@@ -283,11 +283,10 @@
         let startX, scrollLeft;
         let isDragging = false;
 
-        // موازنة موضع البداية ليكون في المنتصف تماماً عند التحميل
-        const cardWidth = originalCards[0].offsetWidth + 30; // الحجم + الـ Gap
+        const cardWidth = originalCards[0].offsetWidth + 30; 
         slider.scrollLeft = cardWidth * originalCards.length;
 
-        // دالة حساب العنصر المتواجد في وسط حاوية التمرير تماماً وتكبيره
+        // دالة حساب المركز بدقة متناهية وبدون تأخير
         function updateCenterFocus() {
             const cards = slider.querySelectorAll('.brand-card');
             const containerCenter = slider.getBoundingClientRect().left + (slider.offsetWidth / 2);
@@ -312,12 +311,12 @@
             }
         }
 
-        // دالة إدارة الدوران اللانهائي والالتفاف (Looping Logic)
+        // هندسة التدوير اللانهائي الذكي اللحظي
         function handleInfiniteScroll() {
             const totalWidth = cardWidth * originalCards.length;
-            if (slider.scrollLeft <= 10) {
+            if (slider.scrollLeft <= 5) {
                 slider.scrollLeft += totalWidth;
-            } else if (slider.scrollLeft >= slider.scrollWidth - slider.offsetWidth - 10) {
+            } else if (slider.scrollLeft >= slider.scrollWidth - slider.offsetWidth - 5) {
                 slider.scrollLeft -= totalWidth;
             }
             updateCenterFocus();
@@ -325,71 +324,82 @@
 
         slider.addEventListener('scroll', handleInfiniteScroll);
 
-        // 2. التحكم الشامل بالفأرة (عجلة روليت الماوس)
+        // 2. تدوير روليت الماوس (تحكم فوري مباشر بدون فرملة)
         slider.addEventListener('wheel', (e) => {
             e.preventDefault();
-            slider.style.scrollBehavior = 'auto';
-            slider.scrollLeft += e.deltaY * 1.2;
+            // استخدامscrollTo مع وضع 'auto' يضمن تتبعاً لحظياً بنسبة 1:1 لسرعة إصبعك
+            slider.scrollTo({
+                left: slider.scrollLeft + e.deltaY * 1.2,
+                behavior: 'auto'
+            });
         }, { passive: false });
 
-        // 3. دعم هندسة الضغط والسحب الحقيقية (Drag & Drop) من أي مساحة أو أيقونة
+        // 3. التحكم بالضغط والسحب (Drag) - خفيف ولحظي جداً
         slider.addEventListener('mousedown', (e) => {
             isDown = true;
             isDragging = false;
-            slider.style.scrollBehavior = 'auto';
             startX = e.pageX - slider.offsetLeft;
             scrollLeft = slider.scrollLeft;
         });
 
         window.addEventListener('mouseup', () => {
+            if (!isDown) return;
             isDown = false;
-            slider.style.scrollBehavior = 'smooth';
-            // إحكام تمرير العنصر الأقرب ليتوسط الشاشة بشكل مثالي عند الإفلات
-            setTimeout(snapToCenter, 50);
+            // إعادة التمركز المغناطيسي بنعومة فقط بعد أن يرفع المستخدم يده
+            snapToCenterSmooth();
         });
 
         slider.addEventListener('mousemove', (e) => {
             if(!isDown) return;
-            const x = e.pageX - slider.offsetLeft;
-            const walk = (x - startX) * 1.5;
-            if (Math.abs(walk) > 5) isDragging = true; // نتحقق إن كان تحريكاً حقيقياً وليس مجرد نقرة
             e.preventDefault();
-            slider.scrollLeft = scrollLeft - walk;
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 1.5; 
+            if (Math.abs(walk) > 3) isDragging = true;
+            
+            slider.scrollTo({
+                left: scrollLeft - walk,
+                behavior: 'auto'
+            });
         });
 
-        // تمكين النقر المباشر على الأيقونة للاختيار مع مراعاة السحب
+        // تفعيل النقرات الفردية للاختيار والتوسيط
         slider.querySelectorAll('.brand-card').forEach(card => {
             card.addEventListener('click', (e) => {
-                if (isDragging) return; // إذا كان المالك يسحب، لا نعتبره نقر اختيار
+                if (isDragging) return; 
                 selectBrand(card);
             });
         });
 
-        function snapToCenter() {
+        // دالة التوسيط المغناطيسي الناعم (تُستدعى فقط عند الإفلات أو الكيبورد)
+        function snapToCenterSmooth() {
             const focused = slider.querySelector('.brand-card.focused');
             if (focused) {
                 const containerCenter = slider.offsetWidth / 2;
                 const cardCenter = focused.offsetLeft + (focused.offsetWidth / 2);
-                slider.scrollLeft = cardCenter - containerCenter;
+                slider.scrollTo({
+                    left: cardCenter - containerCenter,
+                    behavior: 'smooth'
+                });
             }
         }
 
-        // دالة الاختيار الموحدة (نقر، إنتر)
+        // دالة الاختيار الموحدة
         function selectBrand(cardElement) {
             if(!cardElement) return;
             const brandName = cardElement.getAttribute('data-brand');
             document.getElementById('brandSearchInput').value = brandName + " ";
             document.getElementById('brandSearchInput').focus();
             
-            // تمرير الأيقونة المختارة للمنتصف بنعومة
             const containerCenter = slider.offsetWidth / 2;
             const cardCenter = cardElement.offsetLeft + (cardElement.offsetWidth / 2);
-            slider.style.scrollBehavior = 'smooth';
-            slider.scrollLeft = cardCenter - containerCenter;
             
-            // تأثير نبضة تأكيدية مرئية عند الاختيار
+            slider.scrollTo({
+                left: cardCenter - containerCenter,
+                behavior: 'smooth'
+            });
+            
             cardElement.style.borderColor = "var(--cyber-green)";
-            setTimeout(() => updateCenterFocus(), 400);
+            setTimeout(() => updateCenterFocus(), 300);
         }
 
         function executeSearch() {
@@ -399,17 +409,17 @@
             }
         }
 
-        // 4. نظام التحكم عبر لوحة المفاتيح (الأسهم والـ Enter)
+        // 4. نظام التحكم عبر لوحة المفاتيح (يدعم الانتقال السلس المنتظم)
         container.addEventListener('keydown', (e) => {
             const cards = Array.from(slider.querySelectorAll('.brand-card'));
             const focusedIndex = cards.findIndex(c => c.classList.contains('focused'));
             
-            if (e.key === 'ArrowLeft') { // السهم الأيسر ينقل للعنصر التالي
+            if (e.key === 'ArrowLeft') { 
                 e.preventDefault();
                 if (focusedIndex < cards.length - 1) {
                     selectBrand(cards[focusedIndex + 1]);
                 }
-            } else if (e.key === 'ArrowRight') { // السهم الأيمن ينقل للعنصر السابق
+            } else if (e.key === 'ArrowRight') { 
                 e.preventDefault();
                 if (focusedIndex > 0) {
                     selectBrand(cards[focusedIndex - 1]);
@@ -424,8 +434,16 @@
             }
         });
 
-        // تشغيل نظام التحقق الأولي للمركز عند الإقلاع
-        setTimeout(() => { updateCenterFocus(); snapToCenter(); }, 300);
+        // تهيئة الموضع الأول للشبكة عند التشغيل
+        window.addEventListener('load', () => {
+            updateCenterFocus();
+            const focused = slider.querySelector('.brand-card.focused');
+            if (focused) {
+                const containerCenter = slider.offsetWidth / 2;
+                const cardCenter = focused.offsetLeft + (focused.offsetWidth / 2);
+                slider.scrollLeft = cardCenter - containerCenter;
+            }
+        });
     </script>
 </body>
 </html>
