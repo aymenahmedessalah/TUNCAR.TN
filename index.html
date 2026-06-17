@@ -21,20 +21,70 @@
             margin: 0; padding: 0; overflow-x: hidden;
         }
         
+        /* ================= شريط التنقل المتطور مع تبويب بائع واختيار اللغة ================= */
         .navbar {
-            background: var(--primary-dark); padding: 15px 30px;
+            background: var(--primary-dark); padding: 12px 30px;
             display: flex; justify-content: space-between; align-items: center;
             border-bottom: 2px solid var(--border-blue); position: sticky; top: 0; z-index: 1000;
         }
+        .nav-right { display: flex; align-items: center; gap: 30px; }
         .logo { color: var(--cyber-blue); font-weight: bold; font-size: 24px; text-decoration: none; }
         .logo span { color: #fff; }
         
+        /* تبويبات المنصة */
+        .nav-tabs { display: flex; gap: 15px; }
+        .nav-tab-btn {
+            background: transparent; border: 1px solid transparent; color: #9ca3af;
+            padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 500;
+            font-size: 14px; transition: all 0.2s ease; text-decoration: none;
+        }
+        .nav-tab-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
+        .nav-tab-btn.active-tab { 
+            color: var(--cyber-blue); border-color: var(--cyber-blue); 
+            background: rgba(0, 242, 254, 0.05); font-weight: bold; 
+        }
+        .nav-tab-btn.seller-tab {
+            color: var(--cyber-amber); border-color: rgba(255, 184, 0, 0.3);
+            background: rgba(255, 184, 0, 0.02);
+        }
+        .nav-tab-btn.seller-tab:hover {
+            background: rgba(255, 184, 0, 0.1); border-color: var(--cyber-amber); color: #fff;
+        }
+
+        .nav-left { display: flex; align-items: center; gap: 20px; }
+
+        /* قائمة اختيار اللغة المتطورة بالأعلام */
+        .lang-selector-wrapper { position: relative; width: 140px; text-align: right; }
+        .lang-selected-box {
+            background: var(--bg-card); border: 1px solid var(--border-blue);
+            padding: 8px 12px; border-radius: 8px; cursor: pointer; color: #fff;
+            font-size: 13px; display: flex; align-items: center; justify-content: space-between;
+            user-select: none; transition: border-color 0.2s;
+        }
+        .lang-selected-box:hover { border-color: var(--cyber-blue); }
+        .lang-selected-box .flag-icon { margin-left: 6px; }
+        .lang-selected-box .arrow { font-size: 10px; color: #6b7280; transition: transform 0.2s; }
+        .lang-selected-box.open .arrow { transform: rotate(180deg); }
+        
+        .lang-dropdown-list {
+            position: absolute; top: 105%; right: 0; left: 0; background: var(--primary-dark);
+            border: 1px solid var(--border-blue); border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            display: none; flex-direction: column; z-index: 1010; overflow: hidden;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+        .lang-option {
+            padding: 10px 12px; cursor: pointer; color: #d1d5db; font-size: 13px;
+            display: flex; align-items: center; transition: all 0.2s;
+        }
+        .lang-option:hover { background: var(--bg-card); color: var(--cyber-blue); }
+        .lang-option .flag-icon { margin-left: 8px; font-size: 16px; }
+
+        /* ================= السلايدر الدائري اللانهائي المحسن والمحكوم بالإحداثيات ================= */
         .page-section { padding: 40px 20px 100px 20px; max-width: 1200px; margin: 0 auto; }
         .hero-section { text-align: center; background: radial-gradient(circle at 50% 50%, #0d1b3e 0%, transparent 70%); }
         .hero-section h2 { font-size: 32px; margin-bottom: 10px; }
         .hero-section p { color: #9ca3af; margin-bottom: 30px; font-size: 14px; }
 
-        /* ================= 1. سلايدر الماركات الدائري المحسن (تفاعلي بالإحداثيات) ================= */
         .brands-slider-container { 
             max-width: 800px; margin: 0 auto; position: relative; overflow: hidden; padding: 20px 0; 
             outline: none; border: 1px dashed rgba(0, 242, 254, 0.15); border-radius: 16px; background: rgba(15, 23, 42, 0.2);
@@ -45,23 +95,17 @@
         .brands-slider-container::before { left: 0; background: linear-gradient(to right, var(--bg-main), transparent); }
         .brands-slider-container::after { right: 0; background: linear-gradient(to left, var(--bg-main), transparent); }
         
-        .brands-wrapper { 
-            display: flex; align-items: center; gap: 25px; overflow-x: auto; padding: 20px 0; scrollbar-width: none;
-        }
+        .brands-wrapper { display: flex; align-items: center; gap: 25px; overflow-x: auto; padding: 20px 0; scrollbar-width: none; }
         .brands-wrapper::-webkit-scrollbar { display: none; }
 
         .brand-card {
             min-width: 160px; height: 85px; background: var(--bg-card); border: 1px solid var(--border-blue); border-radius: 12px;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s, box-shadow 0.3s, opacity 0.3s;
-            opacity: 0.25; transform: scale(0.85); pointer-events: none; /* النقر يتم التحكم به عبر إحداثيات الحاوية الأب لعدم تجميد السلايدر */
+            opacity: 0.25; transform: scale(0.85); pointer-events: none;
         }
-        .brand-card.focused { 
-            opacity: 1; border-color: var(--cyber-blue); box-shadow: 0 0 25px rgba(0, 242, 254, 0.3); transform: scale(1.15); background: rgba(11, 19, 41, 0.8); 
-        }
-        .brand-card.selected-active {
-            border-color: var(--cyber-green) !important; box-shadow: 0 0 25px rgba(5, 255, 197, 0.4) !important;
-        }
+        .brand-card.focused { opacity: 1; border-color: var(--cyber-blue); box-shadow: 0 0 25px rgba(0, 242, 254, 0.3); transform: scale(1.15); background: rgba(11, 19, 41, 0.8); }
+        .brand-card.selected-active { border-color: var(--cyber-green) !important; box-shadow: 0 0 25px rgba(5, 255, 197, 0.4) !important; }
         .brand-card span { font-weight: bold; font-size: 16px; color: #fff; }
 
         /* ================= لوحة الفلاتر الذكية القائمة بالكامل على الـ Tags والسلايدرات ================= */
@@ -75,13 +119,9 @@
         .flow-section:last-child { border-bottom: none; padding-bottom: 0; }
         .flow-title { font-size: 14px; color: var(--cyber-blue); margin-bottom: 12px; font-weight: bold; display: flex; align-items: center; gap: 8px; }
         
-        /* حاويات السلايدر الأفقي للـ Tags */
-        .tags-slider-horizontal {
-            display: flex; gap: 12px; overflow-x: auto; padding: 8px 5px; scrollbar-width: none;
-        }
+        .tags-slider-horizontal { display: flex; gap: 12px; overflow-x: auto; padding: 8px 5px; scrollbar-width: none; }
         .tags-slider-horizontal::-webkit-scrollbar { display: none; }
         
-        /* تصميم التاج الميكانيكي الموحد */
         .cyber-tag {
             padding: 10px 20px; background: var(--primary-dark); border: 1px solid var(--border-blue);
             color: #d1d5db; border-radius: 30px; font-size: 14px; font-weight: 500;
@@ -120,9 +160,37 @@
 <body>
 
     <div id="site-wrapper">
+        <!-- شريط علوي محدث يتضمن التبويبات واختيار اللغة بالـ Downscroll -->
         <nav class="navbar">
-            <div class="logo">TUNCAR<span>.TN</span></div>
-            <div style="font-size: 14px; color: #9ca3af;">المنظومة التفاعلية الذكية بالـ Tags</div>
+            <div class="nav-right">
+                <a href="#" class="logo">TUNCAR<span>.TN</span></a>
+                <div class="nav-tabs">
+                    <a href="#" class="nav-tab-btn active-tab">🛍️ مشتري</a>
+                    <a href="#" class="nav-tab-btn seller-tab">💼 بائع</a>
+                    <a href="cars-manager.html" class="nav-tab-btn">⚙️ لوحة المالك</a>
+                </div>
+            </div>
+            
+            <div class="nav-left">
+                <!-- قائمة اختيار لغة ميكانيكية مخصصة بالأعلام -->
+                <div class="lang-selector-wrapper">
+                    <div class="lang-selected-box" id="langSelectedBox" onclick="toggleLangDropdown(event)">
+                        <span><span class="flag-icon">🇹🇳</span> عـربي</span>
+                        <span class="arrow">▼</span>
+                    </div>
+                    <div class="lang-dropdown-list" id="langDropdownList">
+                        <div class="lang-option" onclick="changeLanguage('ar', '🇹🇳 عـربي')">
+                            <span class="flag-icon">🇹🇳</span> عـربي
+                        </div>
+                        <div class="lang-option" onclick="changeLanguage('fr', '🇫🇷 Français')">
+                            <span class="flag-icon">🇫🇷</span> Français
+                        </div>
+                        <div class="lang-option" onclick="changeLanguage('en', '🇺🇸 English')">
+                            <span class="flag-icon">🇺🇸</span> English
+                        </div>
+                    </div>
+                </div>
+            </div>
         </nav>
 
         <main class="page-section">
@@ -135,27 +203,23 @@
                     <div class="brands-wrapper" id="infiniteSlider"></div>
                 </div>
 
-                <!-- 2. لوحة التدفق المتسلسلة القائمة بالكامل على الـ Tags (بدون منسدلات) -->
+                <!-- 2. لوحة التدفق المتسلسلة القائمة بالكامل على الـ Tags -->
                 <div class="tags-flow-panel" id="tagsFlowPanel">
-                    
                     <!-- عائلات وموديلات السيارات -->
                     <div class="flow-section" id="modelSection">
                         <div class="flow-title">📂 عائلة السيارة / الموديل (Model Family):</div>
                         <div class="tags-slider-horizontal" id="modelTagsContainer"></div>
                     </div>
-
                     <!-- الفئات والمحركات التابعة للعائلة -->
                     <div class="flow-section" id="variantSection" style="display:none;">
                         <div class="flow-title">⚡ الفئة وسعة المحرك (Variant):</div>
                         <div class="tags-slider-horizontal" id="variantTagsContainer"></div>
                     </div>
-
                     <!-- سنوات الصنع المتوفرة لتلك الفئة المعزولة -->
                     <div class="flow-section" id="yearSection" style="display:none;">
                         <div class="flow-title">📅 سنة الصنع المتوافقة (Production Year):</div>
                         <div class="tags-slider-horizontal" id="yearTagsContainer"></div>
                     </div>
-
                 </div>
 
                 <!-- 3. بطاقة النتيجة المعزولة النهائية -->
@@ -202,6 +266,9 @@
         const yearTagsContainer = document.getElementById('yearTagsContainer');
         const isolatedCarCard = document.getElementById('isolatedCarCard');
 
+        const langSelectedBox = document.getElementById('langSelectedBox');
+        const langDropdownList = document.getElementById('langDropdownList');
+
         let db = {}; 
         let selectedBrand = "";
         let selectedModel = "";
@@ -209,7 +276,28 @@
         let cardWidth = 185; 
         let totalWidth = 0;
 
-        // جلب البيانات من ملف JSON الموحد
+        // ================= منظومة تشغيل وحماية اختيار اللغة (Downscroll) =================
+        function toggleLangDropdown(event) {
+            event.stopPropagation();
+            const isOpen = langDropdownList.style.display === 'flex';
+            langDropdownList.style.display = isOpen ? 'none' : 'flex';
+            langSelectedBox.classList.toggle('open', !isOpen);
+        }
+
+        function changeLanguage(langCode, labelHtml) {
+            langSelectedBox.innerHTML = `<span>${labelHtml}</span> <span class="arrow">▼</span>`;
+            langDropdownList.style.display = 'none';
+            langSelectedBox.classList.remove('open');
+            console.log("تمت التحويل الفوري للواجهة إلى الكود: " + langCode);
+        }
+
+        // إغلاق قائمة اللغة تلقائياً عند الضغط في أي مكان خارجي
+        window.addEventListener('click', () => {
+            langDropdownList.style.display = 'none';
+            langSelectedBox.classList.remove('open');
+        });
+
+        // ================= السلايدر والميكانيزم المترابط القديم =================
         async function fetchDatabase() {
             try {
                 const response = await fetch('cars-db.json');
@@ -220,7 +308,6 @@
             }
         }
 
-        // بناء السلايدر الدائري الثلاثي الأبعاد لضمان انسيابية لا نهائية حقيقية
         function buildInfiniteSlider() {
             slider.innerHTML = '';
             const brands = Object.keys(db);
@@ -234,7 +321,6 @@
                 slider.appendChild(card);
             });
 
-            // النسخ المتطابقة لمنع الفراغات أثناء الدوران
             const originalCards = Array.from(slider.children);
             originalCards.forEach(card => {
                 slider.insertBefore(card.cloneNode(true), slider.firstChild);
@@ -244,16 +330,12 @@
             initCoordinateClickControls(brands.length);
         }
 
-        // إدارة السلايدر بالكامل عبر الماوس (سكرول + تحديد إحداثيات النصف الأيمن والأيسر والمنتصف)
         function initCoordinateClickControls(origLength) {
             const firstCard = slider.querySelector('.brand-card');
             cardWidth = firstCard.getBoundingClientRect().width + 25; 
             totalWidth = cardWidth * origLength;
-            
-            // وضع السلايدر في المنتصف المطلق للمجموعة الثانية
             slider.scrollLeft = totalWidth;
 
-            // تحديث الكارت المتواجد في بؤرة السنتر بدقة رياضية مطلقة
             function updateFocus() {
                 const cards = slider.querySelectorAll('.brand-card');
                 const containerRect = sliderContainer.getBoundingClientRect();
@@ -267,68 +349,54 @@
                     const cardCenter = cardRect.left + (cardRect.width / 2);
                     const dist = Math.abs(centerOfSlider - cardCenter);
                     if (dist < minDistance) {
-                        minDistance = dist;
-                        closestCard = c;
+                        minDistance = dist; closestCard = c;
                     }
                 });
 
                 cards.forEach(c => c.classList.remove('focused'));
-                if (closestCard) {
-                    closestCard.classList.add('focused');
-                }
+                if (closestCard) closestCard.classList.add('focused');
             }
 
-            // قفزة الدوران اللانهائي الآمن والمحمي هندسياً من التجميد
             slider.addEventListener('scroll', () => {
                 let currentScroll = slider.scrollLeft;
-                if (currentScroll <= 5) {
-                    slider.scrollLeft = totalWidth;
-                } else if (currentScroll >= slider.scrollWidth - slider.offsetWidth - 5) {
-                    slider.scrollLeft = totalWidth;
-                }
+                if (currentScroll <= 5) slider.scrollLeft = totalWidth;
+                else if (currentScroll >= slider.scrollWidth - slider.offsetWidth - 5) slider.scrollLeft = totalWidth;
                 updateFocus();
             });
 
-            // دعم بكرة الماوس (Mouse Wheel Scroll)
             sliderContainer.addEventListener('wheel', (e) => {
-                e.preventDefault();
-                slider.scrollLeft += e.deltaY * 0.7;
+                e.preventDefault(); slider.scrollLeft += e.deltaY * 0.7;
             }, { passive: false });
 
-            // هندسة تقسيم إحداثيات السلايدر (يمين / يسار / منتصف) بدون أزرار
             sliderContainer.addEventListener('click', (e) => {
+                // منع التداخل لو المستخدم ضغط على الـ Language من مساحة قريبة
+                if(e.target.closest('.lang-selector-wrapper')) return;
+
                 const rect = sliderContainer.getBoundingClientRect();
-                const clickX = e.clientX - rect.left; // موقع النقرة بالنسبة لحاوية السلايدر
+                const clickX = e.clientX - rect.left;
                 const width = rect.width;
 
-                const leftZone = width * 0.35;  // 35% من اليسار
-                const rightZone = width * 0.65; // 35% من اليمين (يبدأ من 65% فما فوق)
+                const leftZone = width * 0.35;  
+                const rightZone = width * 0.65; 
 
                 if (clickX < leftZone) {
-                    // النقرة في الثلث الأيسر -> نقل السلايدر خطوة لليسار
                     slider.scrollTo({ left: slider.scrollLeft + cardWidth, behavior: 'smooth' });
                 } else if (clickX > rightZone) {
-                    // النقرة في الثلث الأيمن -> نقل السلايدر خطوة لليمين
                     slider.scrollTo({ left: slider.scrollLeft - cardWidth, behavior: 'smooth' });
                 } else {
-                    // النقرة في منطقة المنتصف (بين 35% و65%) -> تأكيد الماركة المختارة والمضاءة
                     const focusedCard = slider.querySelector('.brand-card.focused');
                     if (focusedCard) {
                         document.querySelectorAll('.brand-card').forEach(card => card.classList.remove('selected-active'));
                         focusedCard.classList.add('selected-active');
-                        
-                        // جذب الكارت ليكون في السنتر الهندسي الدقيق والمثالي
                         slider.scrollTo({
                             left: (focusedCard.offsetLeft + focusedCard.offsetWidth / 2) - (slider.offsetWidth / 2),
                             behavior: 'smooth'
                         });
-
                         onBrandSelect(focusedCard.getAttribute('data-brand'));
                     }
                 }
             });
 
-            // مغناطيس الجذب التلقائي عند توقف الحركة
             let scrollTimeout;
             slider.addEventListener('scroll', () => {
                 clearTimeout(scrollTimeout);
@@ -346,9 +414,7 @@
             setTimeout(updateFocus, 200);
         }
 
-        // ================= منظومة تدفق الـ Tags التفاعلية المتسلسلة =================
-
-        // 1. عند تأكيد الماركة بالمنتصف -> توليد سلايدر عائلات السيارات (Tags)
+        // ================= التدفق المتسلسل للـ Tags =================
         function onBrandSelect(brandName) {
             selectedBrand = brandName;
             modelTagsContainer.innerHTML = '';
@@ -369,11 +435,8 @@
             tagsFlowPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
-        // 2. عند اختيار عائلة/موديل السيارة -> توليد الـ Tags للفئات
         function onModelSelect(element, modelName) {
             selectedModel = modelName;
-            
-            // تفعيل التاج المختار وتلوينه
             modelTagsContainer.querySelectorAll('.cyber-tag').forEach(t => t.classList.remove('active'));
             element.classList.add('active');
 
@@ -382,7 +445,6 @@
             isolatedCarCard.style.display = 'none';
 
             const arr = db[selectedBrand][selectedModel] || [];
-            // تجميع الفئات الفريدة المتاحة لهذه العائلة
             const uniqueVariants = [...new Set(arr.map(item => item.variant))];
 
             uniqueVariants.forEach(variant => {
@@ -392,14 +454,11 @@
                 tag.onclick = () => onVariantSelect(tag, variant);
                 variantTagsContainer.appendChild(tag);
             });
-
             variantSection.style.display = 'block';
         }
 
-        // 3. عند اختيار الفئة (Variant) -> توليد سلايدر السنوات (Tags) المتوافقة فقط مع الفئة
         function onVariantSelect(element, variantName) {
             selectedVariant = variantName;
-
             variantTagsContainer.querySelectorAll('.cyber-tag').forEach(t => t.classList.remove('active'));
             element.classList.add('active');
 
@@ -407,7 +466,6 @@
             isolatedCarCard.style.display = 'none';
 
             const arr = db[selectedBrand][selectedModel] || [];
-            // فلترة العناصر للحصول على السنوات المخصصة لهذه الفئة المعزولة فقط
             const filteredItems = arr.filter(item => item.variant === selectedVariant);
 
             filteredItems.forEach(item => {
@@ -417,16 +475,13 @@
                 tag.onclick = () => onFinalYearSelect(tag, item);
                 yearTagsContainer.appendChild(tag);
             });
-
             yearSection.style.display = 'block';
         }
 
-        // 4. اختيار السنة النهائي -> استدعاء البطاقة الميكانيكية المعزولة للسيارة
         function onFinalYearSelect(element, carObject) {
             yearTagsContainer.querySelectorAll('.cyber-tag').forEach(t => t.classList.remove('active'));
             element.classList.add('active');
 
-            // ملء بيانات الكارت النهائي من الكائن المستدعى مباشرة
             document.getElementById('resCarName').innerText = `${selectedBrand} ${selectedModel}`;
             document.getElementById('resCarVariant').innerText = carObject.variant;
             document.getElementById('resCarYear').innerText = carObject.year;
@@ -434,7 +489,6 @@
             document.getElementById('resCarOil').innerText = carObject.oil;
             document.getElementById('resCarNotes').innerText = carObject.notes;
 
-            // إظهار النتيجة للمشتري/البائع وتوجيه عينه صوبها
             isolatedCarCard.style.display = 'block';
             isolatedCarCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
