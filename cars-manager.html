@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TUNCAR | لوحة توليد وتحديث قاعدة البيانات</title>
+    <style>
+        :root {
+            --primary-dark: #0b1329;
+            --bg-main: #030712;
+            --cyber-blue: #00f2fe;
+            --cyber-green: #05ffc5;
+            --cyber-amber: #ffb800;
+            --text-light: #f3f4f6;
+            --border-blue: #1f3a60;
+            --bg-card: #0f172a;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-main); color: var(--text-light); margin: 0; padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 2px solid var(--border-blue); padding-bottom: 20px; margin-bottom: 30px;
+        }
+        h1 { color: var(--cyber-blue); margin: 0; font-size: 26px; }
+        .back-btn {
+            background: var(--primary-dark); color: #fff; padding: 10px 20px;
+            border: 1px solid var(--border-blue); border-radius: 8px; text-decoration: none; font-weight: bold;
+        }
+        .back-btn:hover { border-color: var(--cyber-blue); }
+        
+        .grid-layout { display: grid; grid-template-columns: 1.2fr 2fr; gap: 25px; }
+        .manager-card { background: var(--bg-card); border: 1px solid var(--border-blue); border-radius: 12px; padding: 20px; margin-bottom: 25px; }
+        .manager-card h2 { color: var(--cyber-green); font-size: 18px; margin-top: 0; margin-bottom: 20px; }
+        
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 13px; color: #9ca3af; margin-bottom: 5px; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 10px; background: var(--primary-dark);
+            border: 1px solid var(--border-blue); border-radius: 6px; color: #fff; box-sizing: border-box;
+        }
+        .form-group input:focus { border-color: var(--cyber-blue); outline: none; }
+        
+        .btn-submit {
+            width: 100%; padding: 12px; background: var(--cyber-blue); color: #030712;
+            border: none; border-radius: 6px; font-weight: bold; cursor: pointer;
+        }
+        
+        .db-view { background: var(--bg-card); border: 1px solid var(--border-blue); border-radius: 12px; padding: 20px; }
+        .brand-node { background: var(--primary-dark); border-radius: 8px; margin-bottom: 15px; padding: 15px; border-right: 4px solid var(--cyber-blue); }
+        .brand-header { display: flex; justify-content: space-between; align-items: center; font-weight: bold; font-size: 16px; }
+        
+        .model-node { background: rgba(255,255,255,0.02); margin-top: 10px; padding: 10px; border-radius: 6px; border-right: 3px solid var(--cyber-amber); }
+        .model-header { font-size: 14px; color: var(--cyber-amber); font-weight: bold; margin-bottom: 5px; }
+        
+        .variant-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        .variant-table th, .variant-table td { border: 1px solid var(--border-blue); padding: 6px 10px; text-align: right; }
+        .variant-table th { background: rgba(0, 242, 254, 0.05); color: var(--cyber-blue); }
+        
+        .delete-btn { background: #ef4444; color: white; border: none; padding: 3px 6px; border-radius: 4px; cursor: pointer; font-size: 11px; }
+        
+        /* منطقة كود الـ JSON الناتج لنسخه */
+        .json-output-area { margin-top: 20px; }
+        .json-output-area textarea {
+            width: 100%; background: #000; color: var(--cyber-green);
+            font-family: monospace; padding: 15px; border: 1px solid var(--border-blue); border-radius: 8px; box-sizing: border-box;
+        }
+        .copy-notice { background: rgba(5, 255, 197, 0.1); border: 1px dashed var(--cyber-green); padding: 10px; border-radius: 6px; color: var(--cyber-green); font-size: 13px; margin-top: 10px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>محرر ومولد قاعدة البيانات الشجرية | TUNCAR Engine</h1>
+            <a href="index.html" class="back-btn">العودة للمنصة الرئيسية ←</a>
+        </header>
+
+        <div class="grid-layout">
+            <div class="controls-column">
+                <div class="manager-card">
+                    <h2>إضافة سيارة وفئة ميكانيكية جديدة</h2>
+                    <form id="vehicleForm">
+                        <div class="form-group"><label>الماركة (Brand)</label><input type="text" id="carBrand" placeholder="مثال: VOLKSWAGEN" required></div>
+                        <div class="form-group"><label>الموديل (Model)</label><input type="text" id="carModel" placeholder="مثال: Golf 6" required></div>
+                        <div class="form-group"><label>الفئة / المحرك (Variant)</label><input type="text" id="carVariant" placeholder="مثال: 1.4 TSI توربو" required></div>
+                        <div class="form-group"><label>سنة الصنع (Year)</label><input type="number" id="carYear" placeholder="مثال: 2011" required></div>
+                        <div class="form-group"><label>سعة زيت المحرك (Oil Capacity)</label><input type="text" id="carOil" placeholder="مثال: 3.6 لتر 5W30"></div>
+                        <div class="form-group"><label>كود علبة السرعات (Gearbox Code)</label><input type="text" id="carGearbox" placeholder="مثال: DSG 7"></div>
+                        <div class="form-group"><label>خصائص فنية وملاحظات</label><textarea id="carNotes" rows="2" placeholder="أدخل الملاحظات الميكانيكية بدقة..."></textarea></div>
+                        <button type="submit" class="btn-submit">تحديث الشجرة وتوليد الكود الجديد ⚡</button>
+                    </form>
+                </div>
+
+                <div class="manager-card json-output-area">
+                    <h2 style="color:var(--cyber-amber);">كود قاعدة البيانات الجاهز للنشر (JSON)</h2>
+                    <p style="font-size:12px; color:#9ca3af; margin-top: -10px;">انسخ الكود بالكامل أدناه واستبدل به محتوى ملف <strong style="color:#fff;">cars-db.json</strong> على جيتهاب لتحديث المنصة فوراً.</p>
+                    <textarea id="jsonOutput" rows="12" readonly></textarea>
+                    <div class="copy-notice">💡 بمجرد التعديل، انسخ الكود أعلاه وضعه مباشرة في مستودع GitHub الخاص بك!</div>
+                </div>
+            </div>
+
+            <div class="db-view">
+                <h2 style="color: var(--cyber-blue); margin-top:0;">معاينة الشجرة الهيكلية للبيانات</h2>
+                <div id="databaseTree"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // مصفوفة البيانات الافتراضية للعمل عليها داخل الصفحة قبل التصدير
+        let activeDatabase = {};
+
+        // جلب البيانات من ملف الـ JSON المرفوع على السيرفر كحالة ابتدائية لتعديلها
+        async function fetchInitialDatabase() {
+            try {
+                const response = await fetch('cars-db.json');
+                if (response.ok) {
+                    activeDatabase = await response.json();
+                } else {
+                    throw new Error();
+                }
+            } catch (e) {
+                // إذا لم يجد الملف على السيرفر بعد (أو تشغيل محلي أول مرة)، نضع بيانات افتراضية ميكانيكية
+                activeDatabase = {
+                    "VOLKSWAGEN": {
+                        "Golf 6": [
+                            { "variant": "1.4 TSI توربو", "year": "2011", "oil": "3.6 لتر 5W30", "gearbox": "DSG 7", "notes": "فحص طلمبة الضغط العالي" }
+                        ]
+                    }
+                };
+            }
+            renderTreeAndJSON();
+        }
+
+        function renderTreeAndJSON() {
+            // 1. تحديث صندوق كود الـ JSON التصديري
+            document.getElementById('jsonOutput').value = JSON.stringify(activeDatabase, null, 2);
+
+            // 2. بناء الشجرة المرئية
+            const treeContainer = document.getElementById('databaseTree');
+            treeContainer.innerHTML = '';
+
+            for (const brand in activeDatabase) {
+                const brandNode = document.createElement('div');
+                brandNode.className = 'brand-node';
+                brandNode.innerHTML = `
+                    <div class="brand-header">
+                        <span>🏢 الماركة: ${brand}</span>
+                        <button class="delete-btn" onclick="deleteBrand('${brand}')">حذف الماركة 🗑️</button>
+                    </div>
+                `;
+
+                for (const model in activeDatabase[brand]) {
+                    const modelNode = document.createElement('div');
+                    modelNode.className = 'model-node';
+                    modelNode.innerHTML = `
+                        <div class="model-header">🚘 الموديل: ${model}</div>
+                        <table class="variant-table">
+                            <thead>
+                                <tr>
+                                    <th>الفئة</th><th>السنة</th><th>الزيت</th><th>الفتيس</th><th>ملاحظات ميكانيكية</th><th>إجراء</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    `;
+
+                    const tbody = modelNode.querySelector('tbody');
+                    activeDatabase[brand][model].forEach((v, index) => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td style="color:var(--cyber-green); font-weight:bold;">${v.variant}</td>
+                            <td>${v.year}</td><td>${v.oil}</td><td>${v.gearbox}</td>
+                            <td style="color:#9ca3af;">${v.notes}</td>
+                            <td><button class="delete-btn" onclick="deleteVariant('${brand}', '${model}', ${index})">حذف</button></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+
+                    brandNode.appendChild(modelNode);
+                }
+                treeContainer.appendChild(brandNode);
+            }
+        }
+
+        document.getElementById('vehicleForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const brand = document.getElementById('carBrand').value.trim().toUpperCase();
+            const model = document.getElementById('carModel').value.trim();
+            const variant = document.getElementById('carVariant').value.trim();
+            const year = document.getElementById('carYear').value.trim();
+            const oil = document.getElementById('carOil').value.trim() || 'غير محدد';
+            const gearbox = document.getElementById('carGearbox').value.trim() || 'غير محدد';
+            const notes = document.getElementById('carNotes').value.trim() || 'لا توجد ملاحظات';
+
+            if (!activeDatabase[brand]) activeDatabase[brand] = {};
+            if (!activeDatabase[brand][model]) activeDatabase[brand][model] = [];
+
+            activeDatabase[brand][model].push({ variant, year, oil, gearbox, notes });
+            renderTreeAndJSON();
+
+            // تنظيف الحقول الفرعية
+            document.getElementById('carVariant').value = '';
+            document.getElementById('carYear').value = '';
+            document.getElementById('carOil').value = '';
+            document.getElementById('carGearbox').value = '';
+            document.getElementById('carNotes').value = '';
+        });
+
+        function deleteBrand(brand) {
+            if (confirm(`حذف ماركة ${brand} بالكامل؟`)) {
+                delete activeDatabase[brand];
+                renderTreeAndJSON();
+            }
+        }
+
+        function deleteVariant(brand, model, index) {
+            activeDatabase[brand][model].splice(index, 1);
+            if (activeDatabase[brand][model].length === 0) delete activeDatabase[brand][model];
+            if (Object.keys(activeDatabase[brand]).length === 0) delete activeDatabase[brand];
+            renderTreeAndJSON();
+        }
+
+        // بدء تحميل البيانات الحية عند الفتح
+        fetchInitialDatabase();
+    </script>
+</body>
+</html>
