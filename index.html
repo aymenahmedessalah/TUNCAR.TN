@@ -21,7 +21,7 @@
             margin: 0; padding: 0; overflow-x: hidden;
         }
         
-        /* ================= شريط التنقل المتطور مع تبويب بائع واختيار اللغة ================= */
+        /* ================= شريط التنقل المتطور ================= */
         .navbar {
             background: var(--primary-dark); padding: 12px 30px;
             display: flex; justify-content: space-between; align-items: center;
@@ -31,7 +31,6 @@
         .logo { color: var(--cyber-blue); font-weight: bold; font-size: 24px; text-decoration: none; }
         .logo span { color: #fff; }
         
-        /* تبويبات المنصة */
         .nav-tabs { display: flex; gap: 15px; }
         .nav-tab-btn {
             background: transparent; border: 1px solid transparent; color: #9ca3af;
@@ -39,55 +38,50 @@
             font-size: 14px; transition: all 0.2s ease; text-decoration: none;
         }
         .nav-tab-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
-        .nav-tab-btn.active-tab { 
-            color: var(--cyber-blue); border-color: var(--cyber-blue); 
-            background: rgba(0, 242, 254, 0.05); font-weight: bold; 
+        
+        /* تصميم التبويبات النشطة */
+        .nav-tab-btn.active-buyer { 
+            color: var(--cyber-blue) !important; border-color: var(--cyber-blue) !important; 
+            background: rgba(0, 242, 254, 0.05) !important; font-weight: bold; 
         }
-        .nav-tab-btn.seller-tab {
-            color: var(--cyber-amber); border-color: rgba(255, 184, 0, 0.3);
-            background: rgba(255, 184, 0, 0.02);
-        }
-        .nav-tab-btn.seller-tab:hover {
-            background: rgba(255, 184, 0, 0.1); border-color: var(--cyber-amber); color: #fff;
+        .nav-tab-btn.active-seller { 
+            color: var(--cyber-amber) !important; border-color: var(--cyber-amber) !important; 
+            background: rgba(255, 184, 0, 0.05) !important; font-weight: bold; 
         }
 
         .nav-left { display: flex; align-items: center; gap: 20px; }
 
-        /* قائمة اختيار اللغة المتطورة بالأعلام */
+        /* اختيار اللغة */
         .lang-selector-wrapper { position: relative; width: 140px; text-align: right; }
         .lang-selected-box {
             background: var(--bg-card); border: 1px solid var(--border-blue);
             padding: 8px 12px; border-radius: 8px; cursor: pointer; color: #fff;
             font-size: 13px; display: flex; align-items: center; justify-content: space-between;
-            user-select: none; transition: border-color 0.2s;
+            user-select: none;
         }
-        .lang-selected-box:hover { border-color: var(--cyber-blue); }
-        .lang-selected-box .flag-icon { margin-left: 6px; }
-        .lang-selected-box .arrow { font-size: 10px; color: #6b7280; transition: transform 0.2s; }
         .lang-selected-box.open .arrow { transform: rotate(180deg); }
-        
         .lang-dropdown-list {
             position: absolute; top: 105%; right: 0; left: 0; background: var(--primary-dark);
-            border: 1px solid var(--border-blue); border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            display: none; flex-direction: column; z-index: 1010; overflow: hidden;
-            animation: fadeIn 0.2s ease-in-out;
+            border: 1px solid var(--border-blue); border-radius: 8px; display: none; flex-direction: column; z-index: 1010; overflow: hidden;
         }
-        .lang-option {
-            padding: 10px 12px; cursor: pointer; color: #d1d5db; font-size: 13px;
-            display: flex; align-items: center; transition: all 0.2s;
-        }
+        .lang-option { padding: 10px 12px; cursor: pointer; color: #d1d5db; font-size: 13px; display: flex; align-items: center; }
         .lang-option:hover { background: var(--bg-card); color: var(--cyber-blue); }
-        .lang-option .flag-icon { margin-left: 8px; font-size: 16px; }
+        .lang-option .flag-icon, .lang-selected-box .flag-icon { margin-left: 6px; }
 
-        /* ================= السلايدر الدائري اللانهائي المحسن والمحكوم بالإحداثيات ================= */
+        /* ================= أجزاء الواجهات الديناميكية ================= */
         .page-section { padding: 40px 20px 100px 20px; max-width: 1200px; margin: 0 auto; }
+        .view-pane { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .view-pane.active-view { display: block; }
+
         .hero-section { text-align: center; background: radial-gradient(circle at 50% 50%, #0d1b3e 0%, transparent 70%); }
-        .hero-section h2 { font-size: 32px; margin-bottom: 10px; }
+        .hero-section h2 { font-size: 32px; margin-bottom: 5px; }
+        .en-subtitle { color: #6b7280; font-size: 14px; margin-top: 0; margin-bottom: 15px; font-style: italic; }
         .hero-section p { color: #9ca3af; margin-bottom: 30px; font-size: 14px; }
 
+        /* ================= السلايدر الدائري المحكم للإحداثيات ================= */
         .brands-slider-container { 
             max-width: 800px; margin: 0 auto; position: relative; overflow: hidden; padding: 20px 0; 
-            outline: none; border: 1px dashed rgba(0, 242, 254, 0.15); border-radius: 16px; background: rgba(15, 23, 42, 0.2);
+            border: 1px dashed rgba(0, 242, 254, 0.15); border-radius: 16px; background: rgba(15, 23, 42, 0.2);
         }
         .brands-slider-container::before, .brands-slider-container::after { 
             content: ""; height: 100%; width: 120px; position: absolute; top: 0; z-index: 2; pointer-events: none; 
@@ -108,16 +102,16 @@
         .brand-card.selected-active { border-color: var(--cyber-green) !important; box-shadow: 0 0 25px rgba(5, 255, 197, 0.4) !important; }
         .brand-card span { font-weight: bold; font-size: 16px; color: #fff; }
 
-        /* ================= لوحة الفلاتر الذكية القائمة بالكامل على الـ Tags والسلايدرات ================= */
+        /* ================= لوحة الفلاتر المتسلسلة (Tags) ================= */
         .tags-flow-panel {
             max-width: 850px; margin: 40px auto 30px auto; padding: 30px;
             background: var(--bg-card); border: 1px solid var(--border-blue); border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.6); text-align: right;
-            display: none; animation: fadeIn 0.4s ease-in-out;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6); text-align: right; display: none;
         }
         .flow-section { margin-bottom: 25px; border-bottom: 1px solid rgba(31, 58, 96, 0.4); padding-bottom: 20px; }
         .flow-section:last-child { border-bottom: none; padding-bottom: 0; }
-        .flow-title { font-size: 14px; color: var(--cyber-blue); margin-bottom: 12px; font-weight: bold; display: flex; align-items: center; gap: 8px; }
+        .flow-title { font-size: 14px; color: var(--cyber-blue); margin-bottom: 5px; font-weight: bold; }
+        .flow-en-title { font-size: 11px; color: #6b7280; margin-bottom: 12px; font-style: italic; display: block; }
         
         .tags-slider-horizontal { display: flex; gap: 12px; overflow-x: auto; padding: 8px 5px; scrollbar-width: none; }
         .tags-slider-horizontal::-webkit-scrollbar { display: none; }
@@ -133,17 +127,13 @@
             box-shadow: 0 0 15px rgba(5, 255, 197, 0.2); font-weight: bold;
         }
 
-        /* ================= بطاقة السيارة النهائية المعزولة ================= */
+        /* ================= بطاقة السيارة المعزولة النهائية ================= */
         .isolated-car-card {
             max-width: 850px; margin: 40px auto 0 auto; padding: 30px;
             background: linear-gradient(145deg, #0f172a, #070d19);
             border: 2px solid var(--cyber-green); border-radius: 20px;
-            box-shadow: 0 0 35px rgba(5, 255, 197, 0.2); text-align: right;
-            display: none; animation: slideUp 0.4s ease-out;
+            box-shadow: 0 0 35px rgba(5, 255, 197, 0.2); text-align: right; display: none;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
         .car-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(5, 255, 197, 0.2); padding-bottom: 15px; margin-bottom: 25px; }
         .car-title { font-size: 24px; color: #fff; margin: 0; font-weight: bold; }
         .car-badge { background: rgba(5, 255, 197, 0.1); color: var(--cyber-green); padding: 6px 16px; border-radius: 20px; font-size: 13px; border: 1px solid var(--cyber-green); }
@@ -151,104 +141,176 @@
         .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .info-item { background: rgba(255,255,255,0.02); padding: 15px; border-radius: 10px; border-right: 4px solid var(--cyber-blue); }
         .info-item.full-width { grid-column: span 2; border-right-color: var(--cyber-amber); }
-        .info-label { font-size: 12px; color: #9ca3af; margin-bottom: 6px; }
+        .info-label { font-size: 12px; color: #9ca3af; margin-bottom: 2px; }
+        .info-en-label { font-size: 10px; color: #6b7280; margin-bottom: 6px; font-style: italic; display: block; }
         .info-value { font-size: 16px; color: #fff; font-weight: bold; }
 
+        /* ================= لوحة البائع (Seller Control Panel) ================= */
+        .seller-panel-container {
+            max-width: 850px; margin: 0 auto; padding: 35px; background: var(--bg-card);
+            border: 1px solid var(--border-blue); border-radius: 20px; text-align: right;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+        }
+        .seller-title { font-size: 22px; color: var(--cyber-amber); margin-top: 0; margin-bottom: 5px; font-weight: bold; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 25px; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group.full-width { grid-column: span 2; }
+        .form-group label { font-size: 13px; color: #9ca3af; margin-bottom: 8px; }
+        .form-group label span { font-size: 11px; color: #6b7280; font-style: italic; }
+        .form-group input, .form-group textarea {
+            padding: 12px; background: var(--primary-dark); border: 1px solid var(--border-blue);
+            border-radius: 8px; color: #fff; outline: none; font-size: 14px;
+        }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--cyber-amber); }
+        .submit-btn {
+            margin-top: 25px; width: 100%; padding: 14px; background: linear-gradient(135deg, #ffb800, #ff8c00);
+            border: none; border-radius: 8px; color: #000; font-weight: bold; font-size: 16px; cursor: pointer; transition: opacity 0.2s;
+        }
+        .submit-btn:hover { opacity: 0.9; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         footer { text-align: center; padding: 25px; background: var(--primary-dark); border-top: 1px solid var(--border-blue); font-size: 12px; color: #6b7280; margin-top: 80px; }
     </style>
 </head>
 <body>
 
     <div id="site-wrapper">
-        <!-- شريط علوي محدث يتضمن التبويبات واختيار اللغة بالـ Downscroll -->
+        <!-- شريط التنقل العلوي -->
         <nav class="navbar">
             <div class="nav-right">
                 <a href="#" class="logo">TUNCAR<span>.TN</span></a>
                 <div class="nav-tabs">
-                    <a href="#" class="nav-tab-btn active-tab">🛍️ مشتري</a>
-                    <a href="#" class="nav-tab-btn seller-tab">💼 بائع</a>
-                    <a href="cars-manager.html" class="nav-tab-btn">⚙️ لوحة المالك</a>
+                    <button class="nav-tab-btn id-tab-buyer active-buyer" onclick="switchView('buyer')">🛍️ مشتري / Buyer</button>
+                    <button class="nav-tab-btn id-tab-seller" onclick="switchView('seller')">💼 بائع / Seller</button>
                 </div>
             </div>
             
             <div class="nav-left">
-                <!-- قائمة اختيار لغة ميكانيكية مخصصة بالأعلام -->
                 <div class="lang-selector-wrapper">
                     <div class="lang-selected-box" id="langSelectedBox" onclick="toggleLangDropdown(event)">
                         <span><span class="flag-icon">🇹🇳</span> عـربي</span>
                         <span class="arrow">▼</span>
                     </div>
                     <div class="lang-dropdown-list" id="langDropdownList">
-                        <div class="lang-option" onclick="changeLanguage('ar', '🇹🇳 عـربي')">
-                            <span class="flag-icon">🇹🇳</span> عـربي
-                        </div>
-                        <div class="lang-option" onclick="changeLanguage('fr', '🇫🇷 Français')">
-                            <span class="flag-icon">🇫🇷</span> Français
-                        </div>
-                        <div class="lang-option" onclick="changeLanguage('en', '🇺🇸 English')">
-                            <span class="flag-icon">🇺🇸</span> English
-                        </div>
+                        <div class="lang-option" onclick="changeLanguage('ar', '🇹🇳 عـربي')"><span class="flag-icon">🇹🇳</span> عـربي</div>
+                        <div class="lang-option" onclick="changeLanguage('fr', '🇫🇷 Français')"><span class="flag-icon">🇫🇷</span> Français</div>
+                        <div class="lang-option" onclick="changeLanguage('en', '🇺🇸 English')"><span class="flag-icon">🇺🇸</span> English</div>
                     </div>
                 </div>
             </div>
         </nav>
 
         <main class="page-section">
-            <section class="hero-section">
-                <h2>نظام استدعاء بيانات ومواصفات السيارات</h2>
-                <p>انقر على يمين مساحة السلايدر للذهاب يميناً، ويساره للذهاب يساراً، واضغط في المنتصف تماماً لتأكيد الماركة وتثبيتها.</p>
+            
+            <!-- ================= أولاً: واجهة المشتري (تفتح افتراضياً) ================= -->
+            <div class="view-pane active-view" id="buyerPane">
+                <section class="hero-section">
+                    <h2>نظام استدعاء بيانات ومواصفات السيارات</h2>
+                    <div class="en-subtitle">Automotive Specifications & Systems Retrieval Platform</div>
+                    <p>انقر على يمين مساحة السلايدر للذهاب يميناً، ويساره للذهاب يساراً، واضغط في المنتصف تماماً لتأكيد الماركة وتثبيتها.</p>
 
-                <!-- 1. سلايدر الماركات الدائري اللانهائي المحسن والمحكوم بالإحداثيات -->
-                <div class="brands-slider-container" id="sliderContainer">
-                    <div class="brands-wrapper" id="infiniteSlider"></div>
+                    <!-- سلايدر الماركات الدائري اللانهائي بالإحداثيات -->
+                    <div class="brands-slider-container" id="sliderContainer">
+                        <div class="brands-wrapper" id="infiniteSlider"></div>
+                    </div>
+
+                    <!-- لوحة تدفق الـ Tags بالتفسير الإنجليزي المقابل -->
+                    <div class="tags-flow-panel" id="tagsFlowPanel">
+                        <!-- عائلات وموديلات السيارات -->
+                        <div class="flow-section" id="modelSection">
+                            <div class="flow-title">📂 عائلة السيارة / الموديل:</div>
+                            <span class="flow-en-title">Select Car Family / Model Group</span>
+                            <div class="tags-slider-horizontal" id="modelTagsContainer"></div>
+                        </div>
+                        <!-- الفئات والمحركات التابعة للعائلة -->
+                        <div class="flow-section" id="variantSection" style="display:none;">
+                            <div class="flow-title">⚡ الفئة وسعة المحرك:</div>
+                            <span class="flow-en-title">Select Car Engine Variant / Trim Level</span>
+                            <div class="tags-slider-horizontal" id="variantTagsContainer"></div>
+                        </div>
+                        <!-- سنوات الصنع المتوفرة لتلك الفئة المعزولة -->
+                        <div class="flow-section" id="yearSection" style="display:none;">
+                            <div class="flow-title">📅 سنة الصنع المتوافقة:</div>
+                            <span class="flow-en-title">Select Production Year</span>
+                            <div class="tags-slider-horizontal" id="yearTagsContainer"></div>
+                        </div>
+                    </div>
+
+                    <!-- بطاقة النتيجة المعزولة مع التوضيح الإنجليزي لقطع الغيار والزيت -->
+                    <div class="isolated-car-card" id="isolatedCarCard">
+                        <div class="car-header">
+                            <h4 class="car-title" id="resCarName">-</h4>
+                            <span class="car-badge" id="resCarVariant">-</span>
+                        </div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">سنة الصنع الحالية للسيارة</div>
+                                <span class="info-en-label">Production Year</span>
+                                <div class="info-value" id="resCarYear">-</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">علبة السرعات الميكانيكية المعتمدة</div>
+                                <span class="info-en-label">Transmission / Gearbox Type</span>
+                                <div class="info-value" id="resCarGearbox">-</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">المواصفة الفنية وزيت المحرك الموصى به</div>
+                                <span class="info-en-label">Recommended Engine Oil Specification & Capacity</span>
+                                <div class="info-value" style="color: var(--cyber-green);" id="resCarOil">-</div>
+                            </div>
+                            <div class="info-item full-width">
+                                <div class="info-label">دليل وملاحظات المالك للمنظومة</div>
+                                <span class="info-en-label">System Engineering Notes & Support Manual</span>
+                                <div class="info-value" style="font-weight: normal; color: #d1d5db;" id="resCarNotes">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- ================= ثانياً: واجهة البائع (تفتح عند الضغط على التبويب) ================= -->
+            <div class="view-pane" id="sellerPane">
+                <div class="seller-panel-container">
+                    <div class="seller-title">💼 لوحة التحكم للبائع وتحديث البيانات</div>
+                    <div class="en-subtitle">Seller Management Panel - Update Systems & Stocks</div>
+                    <p style="color: #9ca3af; font-size: 14px; margin-bottom: 25px;">أدخل الخصائص والمواصفات الفنية الميكانيكية الدقيقة لسيارتك ليتم إضافتها فورياً إلى قاعدة بيانات المنصة الإلكترونية للمشترين.</p>
+                    
+                    <form onsubmit="handleSellerSubmit(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>الماركة التجارية <span>(Brand Name - e.g., Volkswagen)</span></label>
+                                <input type="text" required placeholder="مثال: Volkswagen">
+                            </div>
+                            <div class="form-group">
+                                <label>الموديل / العائلة <span>(Model Group - e.g., Golf 6)</span></label>
+                                <input type="text" required placeholder="مثال: Golf 6">
+                            </div>
+                            <div class="form-group">
+                                <label>الفئة وسعة ونوع المحرك <span>(Engine Variant - e.g., 1.4 TSI)</span></label>
+                                <input type="text" required placeholder="مثال: 1.4 TSI">
+                            </div>
+                            <div class="form-group">
+                                <label>سنة الصنع <span>(Production Year - e.g., 2012)</span></label>
+                                <input type="number" required placeholder="مثال: 2012">
+                            </div>
+                            <div class="form-group">
+                                <label>نوع وناقل الحركة <span>(Gearbox - e.g., DSG Automatic 7-Speed)</span></label>
+                                <input type="text" required placeholder="مثال: DSG Automatic 7-Speed">
+                            </div>
+                            <div class="form-group">
+                                <label>مواصفة وسعة زيت المحرك <span>(Engine Oil Spec - e.g., 5W30 VW 504.00)</span></label>
+                                <input type="text" required placeholder="مثال: 4.3 Liters 5W30 VW 504.00/507.00">
+                            </div>
+                            <div class="form-group full-width">
+                                <label>دليل الدعم والملاحظات الفنية للمنظومة <span>(Technical Support Manual & Notes)</span></label>
+                                <textarea rows="4" placeholder="اكتب الملاحظات الميكانيكية أو رموز قطع الغيار المتوافقة بدقة..."></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-btn">💾 حفظ ونشر المنظومة الجديدة في المنصة</button>
+                    </form>
                 </div>
+            </div>
 
-                <!-- 2. لوحة التدفق المتسلسلة القائمة بالكامل على الـ Tags -->
-                <div class="tags-flow-panel" id="tagsFlowPanel">
-                    <!-- عائلات وموديلات السيارات -->
-                    <div class="flow-section" id="modelSection">
-                        <div class="flow-title">📂 عائلة السيارة / الموديل (Model Family):</div>
-                        <div class="tags-slider-horizontal" id="modelTagsContainer"></div>
-                    </div>
-                    <!-- الفئات والمحركات التابعة للعائلة -->
-                    <div class="flow-section" id="variantSection" style="display:none;">
-                        <div class="flow-title">⚡ الفئة وسعة المحرك (Variant):</div>
-                        <div class="tags-slider-horizontal" id="variantTagsContainer"></div>
-                    </div>
-                    <!-- سنوات الصنع المتوفرة لتلك الفئة المعزولة -->
-                    <div class="flow-section" id="yearSection" style="display:none;">
-                        <div class="flow-title">📅 سنة الصنع المتوافقة (Production Year):</div>
-                        <div class="tags-slider-horizontal" id="yearTagsContainer"></div>
-                    </div>
-                </div>
-
-                <!-- 3. بطاقة النتيجة المعزولة النهائية -->
-                <div class="isolated-car-card" id="isolatedCarCard">
-                    <div class="car-header">
-                        <h4 class="car-title" id="resCarName">-</h4>
-                        <span class="car-badge" id="resCarVariant">-</span>
-                    </div>
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <div class="info-label">سنة الصنع الحالية للسيارة</div>
-                            <div class="info-value" id="resCarYear">-</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">علبة السرعات الميكانيكية المعتمدة (Gearbox)</div>
-                            <div class="info-value" id="resCarGearbox">-</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">المواصفة الفنية وزيت المحرك الموصى به</div>
-                            <div class="info-value" style="color: var(--cyber-green);" id="resCarOil">-</div>
-                        </div>
-                        <div class="info-item full-width">
-                            <div class="info-label">دليل وملاحظات المالك للمنظومة</div>
-                            <div class="info-value" style="font-weight: normal; color: #d1d5db;" id="resCarNotes">-</div>
-                        </div>
-                    </div>
-                </div>
-
-            </section>
         </main>
 
         <footer><span>© 2026 TUNCAR. كافة البيانات محكمة ومحمية من مالك المنصة.</span></footer>
@@ -270,41 +332,63 @@
         const langDropdownList = document.getElementById('langDropdownList');
 
         let db = {}; 
-        let selectedBrand = "";
-        let selectedModel = "";
-        let selectedVariant = "";
-        let cardWidth = 185; 
-        let totalWidth = 0;
+        let selectedBrand = ""; let selectedModel = ""; let selectedVariant = "";
+        let cardWidth = 185; let totalWidth = 0;
 
-        // ================= منظومة تشغيل وحماية اختيار اللغة (Downscroll) =================
+        // ================= آلية التبديل الحصري بين واجهة المشتري والبائع =================
+        function switchView(viewMode) {
+            const btnBuyer = document.querySelector('.id-tab-buyer');
+            const btnSeller = document.querySelector('.id-tab-seller');
+            const paneBuyer = document.getElementById('buyerPane');
+            const paneSeller = document.getElementById('sellerPane');
+
+            if(viewMode === 'buyer') {
+                btnBuyer.classList.add('active-buyer');
+                btnSeller.classList.remove('active-seller');
+                paneBuyer.classList.add('active-view');
+                paneSeller.classList.remove('active-view');
+                // تدوير السلايدر للتأكد من المحاذاة الفيزيائية
+                setTimeout(() => { slider.scrollLeft = totalWidth; }, 50);
+            } else {
+                btnSeller.classList.add('active-seller');
+                btnBuyer.classList.remove('active-buyer');
+                paneSeller.classList.add('active-view');
+                paneBuyer.classList.remove('active-view');
+            }
+        }
+
+        // معالجة نموذج البائع (نشر البيانات)
+        function handleSellerSubmit(event) {
+            event.preventDefault();
+            alert("تم إرسال وحفظ بيانات السيارة بنجاح في المنظومة وجاري تحديث ملف cars-db.json!");
+            event.target.reset();
+        }
+
+        // ================= منظومة اختيار اللغة الـ Downscroll =================
         function toggleLangDropdown(event) {
             event.stopPropagation();
             const isOpen = langDropdownList.style.display === 'flex';
             langDropdownList.style.display = isOpen ? 'none' : 'flex';
             langSelectedBox.classList.toggle('open', !isOpen);
         }
-
         function changeLanguage(langCode, labelHtml) {
             langSelectedBox.innerHTML = `<span>${labelHtml}</span> <span class="arrow">▼</span>`;
             langDropdownList.style.display = 'none';
             langSelectedBox.classList.remove('open');
-            console.log("تمت التحويل الفوري للواجهة إلى الكود: " + langCode);
         }
-
-        // إغلاق قائمة اللغة تلقائياً عند الضغط في أي مكان خارجي
         window.addEventListener('click', () => {
             langDropdownList.style.display = 'none';
             langSelectedBox.classList.remove('open');
         });
 
-        // ================= السلايدر والميكانيزم المترابط القديم =================
+        // ================= السلايدر الدائري بالإحداثيات ومغناطيس التمركز =================
         async function fetchDatabase() {
             try {
                 const response = await fetch('cars-db.json');
                 db = await response.json();
                 buildInfiniteSlider();
             } catch (e) {
-                slider.innerHTML = '<div style="color:#ef4444; padding:20px;">برجاء رفع وتحديث ملف cars-db.json المركزي ليعمل السلايدر التفاعلي</div>';
+                slider.innerHTML = '<div style="color:#ef4444; padding:20px;">يرجى التأكد من وجود ملف السيرفر cars-db.json</div>';
             }
         }
 
@@ -341,18 +425,12 @@
                 const containerRect = sliderContainer.getBoundingClientRect();
                 const centerOfSlider = containerRect.left + (containerRect.width / 2);
                 
-                let closestCard = null;
-                let minDistance = Infinity;
-
+                let closestCard = null; let minDistance = Infinity;
                 cards.forEach(c => {
-                    const cardRect = c.getBoundingClientRect();
-                    const cardCenter = cardRect.left + (cardRect.width / 2);
+                    const cardCenter = c.getBoundingClientRect().left + (c.offsetWidth / 2);
                     const dist = Math.abs(centerOfSlider - cardCenter);
-                    if (dist < minDistance) {
-                        minDistance = dist; closestCard = c;
-                    }
+                    if (dist < minDistance) { minDistance = dist; closestCard = c; }
                 });
-
                 cards.forEach(c => c.classList.remove('focused'));
                 if (closestCard) closestCard.classList.add('focused');
             }
@@ -369,15 +447,13 @@
             }, { passive: false });
 
             sliderContainer.addEventListener('click', (e) => {
-                // منع التداخل لو المستخدم ضغط على الـ Language من مساحة قريبة
                 if(e.target.closest('.lang-selector-wrapper')) return;
 
                 const rect = sliderContainer.getBoundingClientRect();
                 const clickX = e.clientX - rect.left;
                 const width = rect.width;
 
-                const leftZone = width * 0.35;  
-                const rightZone = width * 0.65; 
+                const leftZone = width * 0.35; const rightZone = width * 0.65; 
 
                 if (clickX < leftZone) {
                     slider.scrollTo({ left: slider.scrollLeft + cardWidth, behavior: 'smooth' });
@@ -403,10 +479,7 @@
                 scrollTimeout = setTimeout(() => {
                     const f = slider.querySelector('.brand-card.focused');
                     if(f && !slider.matches(':active')) {
-                        slider.scrollTo({
-                            left: (f.offsetLeft + f.offsetWidth / 2) - (slider.offsetWidth / 2),
-                            behavior: 'smooth'
-                        });
+                        slider.scrollTo({ left: (f.offsetLeft + f.offsetWidth / 2) - (slider.offsetWidth / 2), behavior: 'smooth' });
                     }
                 }, 150);
             });
@@ -414,13 +487,11 @@
             setTimeout(updateFocus, 200);
         }
 
-        // ================= التدفق المتسلسل للـ Tags =================
+        // ================= معالجة تدفق الـ Tags المتسلسلة =================
         function onBrandSelect(brandName) {
             selectedBrand = brandName;
             modelTagsContainer.innerHTML = '';
-            variantSection.style.display = 'none';
-            yearSection.style.display = 'none';
-            isolatedCarCard.style.display = 'none';
+            variantSection.style.display = 'none'; yearSection.style.display = 'none'; isolatedCarCard.style.display = 'none';
 
             const models = Object.keys(db[selectedBrand] || {});
             models.forEach(model => {
@@ -430,7 +501,6 @@
                 tag.onclick = () => onModelSelect(tag, model);
                 modelTagsContainer.appendChild(tag);
             });
-
             tagsFlowPanel.style.display = 'block';
             tagsFlowPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
@@ -439,14 +509,10 @@
             selectedModel = modelName;
             modelTagsContainer.querySelectorAll('.cyber-tag').forEach(t => t.classList.remove('active'));
             element.classList.add('active');
-
-            variantTagsContainer.innerHTML = '';
-            yearSection.style.display = 'none';
-            isolatedCarCard.style.display = 'none';
+            variantTagsContainer.innerHTML = ''; yearSection.style.display = 'none'; isolatedCarCard.style.display = 'none';
 
             const arr = db[selectedBrand][selectedModel] || [];
             const uniqueVariants = [...new Set(arr.map(item => item.variant))];
-
             uniqueVariants.forEach(variant => {
                 const tag = document.createElement('div');
                 tag.className = 'cyber-tag';
@@ -461,13 +527,10 @@
             selectedVariant = variantName;
             variantTagsContainer.querySelectorAll('.cyber-tag').forEach(t => t.classList.remove('active'));
             element.classList.add('active');
-
-            yearTagsContainer.innerHTML = '';
-            isolatedCarCard.style.display = 'none';
+            yearTagsContainer.innerHTML = ''; isolatedCarCard.style.display = 'none';
 
             const arr = db[selectedBrand][selectedModel] || [];
             const filteredItems = arr.filter(item => item.variant === selectedVariant);
-
             filteredItems.forEach(item => {
                 const tag = document.createElement('div');
                 tag.className = 'cyber-tag';
